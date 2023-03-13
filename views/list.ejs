@@ -195,53 +195,132 @@
                     margin: 0%;
                     position: absolute;
                     top: 0%;
-                    left: 40%;
+                    left: 30%;
                     transform: none;
+                    width: 100%;
+                    height: 100%;
                     
+                    
+                }.modal-body{
+                  height: 700px;
                 }
                 
             </style>
               <!-- Modal -->
-              <div class="modal fade" id="popup<%= item._id %>"  tabindex="-1" role="dialog" aria-labelledby="popup<%= item._id %>Label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content ">
+              <div class="modal fade" id="popup<%= item._id %>" tabindex="-1" role="dialog" aria-labelledby="popup<%= item._id %>Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                  <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="popup<%= item._id %>Label"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5>
                       <button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close"> Close
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
+                    
                     <div class="modal-body">
-                      <p class="iNFORStyle">Employee Number: <%= item.Employee_number %></p>
-                      <p  class="iNFORStyle">Employee Home Address: <%= item.Employee_Home_Address %></p>
-                      <p class="iNFORStyle">Employee Email Address: <%= item.Employee_email_adsress %></p>
-                      <p class="iNFORStyle">Employee ID Number: <%= item.EpmloyyeID_Number %></p>
-                      <p class="iNFORStyle">Employee Contact Details: <%= item.Epmloyye_Contact %></p>
-                      <p class="iNFORStyle">Employee Alternative Contact Details: <%= item.Epmloyye_Altenative_Contact %></p>
-                      <p class="iNFORStyle">Department: <%= item.Employee_Department %></p>
-                      <p class="iNFORStyle">Employee Tax Number : <%= item.Employee_Tax_Number %></p>
-                      <p class="iNFORStyle">Employee UIF: <%= item.Epmloyye_UIF %></p>
-                      <p class="iNFORStyle">Employee Tax: <%= item.Epmloyye_TAX %></p>
-                      <p class="iNFORStyle">Employee PAYE: <%= item.Epmloyye_PAYE %></p>
-                      <p class="iNFORStyle">Employee SDL: <%= item.Epmloyye_SDL %></p>
-                      <p class="iNFORStyle">Employee Hourly Rate: <%= item.Epmloyye_hour_Rate %></p>
-                      <p class="iNFORStyle">Employee Basic Salary: <%= item.Epmloyye_Basic_Salary %></p>
-                      <p class="iNFORStyle">Employee Final Salary: <%= item.Epmloyye_Basic_Final_Salary %></p>
-                      <p class="iNFORStyle">Employee Fine: <%= item.Epmloyye_Fines %></p>
-                      <p class="iNFORStyle">Employee Citizenship: <%= item.Employee_CitizenShip %></p>
-                      <p class="iNFORStyle">Employee Nationality: <%= item.Employee_Nationality %></p>
-                      <p class="iNFORStyle">Employee Allocated Leave Days: <%= item.Employee_Leave_Days_total %></p>
-                      <p class="iNFORStyle">Employee Days Taken: <%= item.Employee_Leave_Days_Taken %></p>
-                      <p class="iNFORStyle">Employee Days Left: <%= item.Employee_Leave_Days_left %></p>
-                      <p class="iNFORStyle">Employee Nationality: <%= item.Employee_Nationality %></p>
-                     
-                      <!-- Add more information as needed -->
+                      <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active"  data-toggle="tab" href="#EmployeeInfo_<%= item._id %>" role="tab">Employee Info</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#EmploymentInfo_<%= item._id %>" role="tab">Emyloyment info</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#Allowance_<%= item._id %>" role="tab">Allowance</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#Deductions_<%= item._id %>" role="tab">Deductions</a>
+                          </li>
+                        </ul>
+                        <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="EmployeeInfo_<%= item._id %>" role="tabpanel">
+                          <div class="row">
+                            <div class="col-3">
+                              <img class="ProfileP2" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
+
+                            </div>
+                            <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee Number: <span class="iNFORStyle2"> <%= item.Employee_number %></span> </p>
+                            </div>
+                            <div class="col-4">
+                              <p  class="iNFORStyle">Employee Home Address:<span class="iNFORStyle2"><%= item.Employee_Home_Address %> </span> </p>
+                             </div>
+                             <div class="col-4">
+                              <p class="iNFORStyle">Employee Nationality: <span class="iNFORStyle2"><%= item.Employee_Nationality %></span> </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee Email Address: <span class="iNFORStyle2"><%= item.Employee_email_adsress %></span></p>
+                              </div>
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee Alternative Contact Details: <span class="iNFORStyle2"><%= item.Epmloyye_Altenative_Contact %> </span> </p>
+                            </div>
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee Contact Details: <span class="iNFORStyle2"><%= item.Epmloyye_Contact %> </span> </p>
+                             </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee ID Number: <span class="iNFORStyle2"><%= item.EpmloyyeID_Number %> </span> </p>
+                            </div>
+                            <div class="col-4">
+                              <p class="iNFORStyle">Employee Citizenship: <span class="iNFORStyle2"><%= item.Employee_CitizenShip %> </span> </p>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="EmploymentInfo_<%= item._id %>" role="tabpanel">
+                          <div class="row">
+                            <div class="col-4">
+                              <p class="iNFORStyle">Department:<span class="iNFORStyle2"><%= item.Employee_Department %> <p class="iNFORStyle"></p></span> </p>
+                            </div>
+                            <div class="col-4">
+                              <p  class="iNFORStyle">Employee Tax Number : <span class="iNFORStyle2"><%= item.Employee_Tax_Number %> </span> </p>
+                             </div>
+                             <div class="col-4">
+                              <p class="iNFORStyle">Employee UIF: <span class="iNFORStyle2"><%= item.Epmloyye_UIF %></span> </p>
+                              
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <p class="iNFORStyle">Department:<span class="iNFORStyle2"><%= item.Employee_Department %> <p class="iNFORStyle"></p></span> </p>
+                            </div>
+                            <div class="col-4">
+                              <p  class="iNFORStyle">Employee Tax Number : <span class="iNFORStyle2"><%= item.Employee_Tax_Number %> </span> </p>
+                             </div>
+                             <div class="col-4">
+                              <p class="iNFORStyle">Employee UIF: <span class="iNFORStyle2"><%= item.Epmloyye_UIF %></span> </p>
+                              
+                            </div>
+                          </div>
+
+                          
+                          
+                          <p class="iNFORStyle">Employee Tax: <%= item.Epmloyye_TAX %></p>
+                          <p class="iNFORStyle">Employee PAYE: <%= item.Epmloyye_PAYE %></p>
+                          <p class="iNFORStyle">Employee SDL: <%= item.Epmloyye_SDL %></p>
+                          <p class="iNFORStyle">Employee Hourly Rate: <%= item.Epmloyye_hour_Rate %></p>
+                          <p class="iNFORStyle">Employee Basic Salary: <%= item.Epmloyye_Basic_Salary %></p>
+                          <p class="iNFORStyle">Employee Final Salary: <%= item.Epmloyye_Basic_Final_Salary %></p>
+                        </div>
+                        <div class="tab-pane" id="Allowance_<%= item._id %>" role="tabpanel">
+                          <p class="iNFORStyle">Employee Allocated Leave Days: <%= item.Employee_Leave_Days_total %></p>
+                          <p class="iNFORStyle">Employee Days Taken: <%= item.Employee_Leave_Days_Taken %></p>
+                          <p class="iNFORStyle">Employee Days Left: <%= item.Employee_Leave_Days_left %></p>
+                         
+                        </div>
+                        <div class="tab-pane" id="Deductions_<%= item._id %>" role="tabpanel">
+                          <p class="iNFORStyle">Employee Days Left: <%= item.Employee_Leave_Days_left %></p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-8"></div>
-                      <div class="col-4"> </div>
-                    </div>
-                   
                   </div>
                 </div>
               </div>

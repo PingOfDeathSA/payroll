@@ -4,6 +4,16 @@
   border-radius: 10%;
   object-fit: cover;
 }
+
+
+.ProfileP2 {
+  width: 130px;
+  height: 130px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
 .Marginremovepopup{
   margin: 0px;
   padding: 0px;
@@ -13,10 +23,20 @@
 
 .iNFORStyle {
   background-color: white;
-  color: rgb(196, 173, 173);
+  color: rgb(0, 0, 0);
   padding: 4px;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-weight: 100;
+  font-weight:300;
+  
+}
+.iNFORStyle2 {
+  background-color: white;
+  color: rgb(96, 190, 135);
+  padding: 4px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight:500;
+  margin-top: 0%;
+  padding-top: 0%;
 }
 
 .modal-body:hover {
