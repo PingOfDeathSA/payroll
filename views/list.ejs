@@ -166,83 +166,66 @@
             </button>
           </div>
         </div>
-  
-     
-
-        <section class="boxes"><div class="row">
-          <div class="col-sm-3">
-          <div class="card">
-          <div class="card-body">
-          <h5 class="card-title">My learners</h5>
-          <tr>
-            <h1><%= Learn.length %></h1>
-          </tr>
-          <a href="Mylearners.html" class="btn btn-primary">View Learners</a>
-          </div>
-          </div>
-          </div>    
-        </div> 
-        </section> 
-          
-
-
-
-         
-        <div class="card" style="width: 18rem;">
-          <% Learn.forEach(function(item) { %>
-           
-              <img class="ProfileP" src="<%= item.Teacher_Profile_Picture %>" alt="">
-
-       
-            <% }); %>
-          <div class="card-body">
-            <h5 class="card-title"> 
-              <% Learn.forEach(function(item) { %>
-                <td><%= item.Title %></td>           <td><%= item.TeacherName %></td> 
-             
-  
-         
-              <% }); %>
-            </h5>
-            <h5 class="card-title"> 
-              <% Learn.forEach(function(item) { %>
-                <td>Gender:</td>           <td><%= item.Gender %></td> 
-             
-  
-         
-              <% }); %>
-            </h5>
-            <h6 class="card-title"> 
-              <% Learn.forEach(function(item) { %>
-                <td>Eamil Address:</td>      <td><%= item.email_adsress %></td> 
-             
-  
-         
-              <% }); %>
-            </h6>
-            <h6 class="card-title"> 
-              <% Learn.forEach(function(item) { %>
-                <td> Home Address:</td>      <td><%= item.address %></td> 
-             
-  
-         
-              <% }); %>
-            </h6>
-          
-            <a href="#" class="btn btn-primary">View Full Profile</a>
+        
+        <div class="row">
+          <div class="EmployeesHeader col-8">Employees</div>
+          <div class="col-4">        <form class="form-inline">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search">
+              <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
           </div>
         </div>
 
-          
-
-
-
-
-
-   
-  
-         
         
+  
+        <table class="table table-striped">
+          <thead class="bg-dark">
+          <tr>
+          <th class="textheader">Profile Picture</th>
+          <th class="textheader">Employee Number</th>
+          <th class="textheader">Fist Name</th>
+          <th class="textheader">Last Name</th>
+          <th class="textheader">Department</th>
+          <th class="textheader">Action</th>
+          <th class="textheader">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% Learn.forEach(function(item) { %>
+          <tr>
+            <td> <img class="ProfileP" src="<%= item.Employee_Profile_Picture %>" alt=""></td>
+            <td class="textpadding"><%= item.Employee_number %></td>
+            <td class="textpadding"><%= item.Employee_FirstName %></td>
+            <td class="textpadding"><%= item.Employee_LastName %></td>
+            <td class="textpadding"><%= item.Employee_Department %></td>
+   
+            
+            <td class="textpadding">
+              <button type="button" class="btn btn-success">Edit</button>
+              <button type="button" class="btn btn-danger">Delele</button>
+              
+            
+          </td>
+            <td style="vertical-align: middle;">
+       
+             
+                <button type="button" class="btn btn-dark">Pending</button>
+           
+
+              
+            </td>
+          </tr>
+          <% }); %>
+          </tbody>
+          
+          </table>      
+        </body>
       
       
 

@@ -12,431 +12,588 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
-mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/SchoolDB');
-var StudentNumber = Math.random();
-StudentNumber = Math.floor(StudentNumber *900)+100;
-var currentSN = "2023"+StudentNumber
+mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/PayrolllDB');
+
 // console.log(currentSN);
 
 
-const Grade_PropertiesSchema = mongoose.Schema({
-  TeacherName: {
+const PayrollSchema = mongoose.Schema({
+
+Employee_Profile_Picture: {
     type: String,
-    required: [true, "check Teacher title Enter Title"],
+    required: [true, "Please provide a valid link for the Employee's profile picture"]
   },
-  Teacher_Profile_Picture: {
-    type: String,
-    required: [true, "Please provide a valid link for the teacher's profile picture"]
-  },
-    address: {
+Employee_email_adsress:  {
       type: String,
-      required: [true, "Check address missing"]
+      required: [true, "Check  Employee Email missing"]
     },
-    email_adsress:  {
+Employee_number: {
       type: String,
-      required: [true, "Check Email missing"]
+      required: [true, "Check Employee Number missing missing"]
     },
-    teacher_number: {
-      type: String,
-      required: [true, "Check Teacher Number missing missing"]
-    },
-    Title:{
+EmployeeTitle:{
       type:String,
       minlength: 2,
-      maxlength: 2,
-      required: [true, "check Teacher title Enter Title"],
+      maxlength: 5,
+      required: [true, "Check Employee title Enter Title"],
     },
-      grade_number: 
+Employee_Tax_Number: 
       {
         type: String || Number,
-        min:2,
-        max: 2,
-        required: [true, "check Grade number"],
-        
-    
+        min:10,
+        max: 10,
+        required: [true, "Check Employee TAX number"],
       },
-      Gender: {
-        type: String,
-        minlength: 1,
-        maxlength: 1,
-        required: [true, " Check Gender charector"]
+EpmloyyeID_Number: {
+        type: String || Number,
+        minlength: 13,
+        maxlength: 13,
+        required: [true, "Check Check Employee ID Number"]
     },
-    Subject: {
-      type: String,
-      
-      required: [true, " Check Subject missing"]
+Epmloyye_Contact: {
+      type: String || Number,
+      minlength: 10,
+      maxlength: 10,
+      required: [true, "Check Employee Contact Details"]
   },
-    
-  
-});
-const Grade_Propertiesmodel = mongoose.model("Grade_ProCollection", Grade_PropertiesSchema);
-
-const LearnersSchema = mongoose.Schema({ 
-  GRADEProps: {
-    type: mongoose.Schema.Types.ObjectId, // Reference field
-    ref: 'Grade_ProCollection' // Name of the referenced schema collection
-  },
-Student_Number: {
-  type: Number,
-  required: [true, "Check Student Name missing"]
-},
-  Fist_Name: {
-    type: String,
-    required: [true, "Check First Name missing"]
-  },
-  Last_Name: {
-    type: String,
-    required: [true, "Check Last Name missing"]
-  },
-  grade_number: 
-  {
+Epmloyye_Altenative_Contact: {
     type: String || Number,
-    min: 2,
-    max: 2,
-    required: [true, "check Grade number"],
-    
-
-  },
-  Gender: {
+    minlength: 10,
+    maxlength: 10,
+    required: [true, "Check Employee Contact Alternative Details"]
+},
+Epmloyye_UIF: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 10,
+  required: [true, "Check Employee UIF"]
+},
+Epmloyye_TAX: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 10,
+  required: [true, "Check Employee UIF Tax Number"]
+},
+Epmloyye_PAYE: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 13,
+  required: [true, "Check Employee PAYE"]
+},
+Epmloyye_SDL: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 10,
+  required: [true, "Check Employee SDL"]
+},
+Epmloyye_hour_Rate: {
+  type: String,
+  minlength: 0,
+  maxlength: 6,
+  required: [true, "Check Employee Rate"]
+},
+Epmloyye_Basic_Salary: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 50,
+  required: [true, "Check Employee Basic Salary"]
+},
+Epmloyye_Basic_Final_Salary: {
+  type: String || Number,
+  minlength: 0,
+ 
+  required: [true, "Check Employee Final Basic Salary"]
+},
+Epmloyye_Fines: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 13,
+  required: [true, " Check Employee Fines"]
+},
+Employee_CitizenShip: {
       type: String,
-      minlength: 1,
-      maxlength: 1,
-      required: [true, " Check Gender charector"]
+      
+      required: [true, "Check Employee Citizenship Status"]
   },
-  
-  Leaner_Profile_Picture: {
+  Employee_Nationality: {
     type: String,
-    required: [true, "Check profile link missing"]
-  },
-  address: {
-    type: String,
-    required: [true, "Check address missing"]
-  },
-  email_adsress:  {
-    type: String,
-    required: [true, "Check Email missing"]
-  },
-
-  // LearnerT: { type: mongoose.Schema.Types.ObjectId, ref: 'Teacher'}
-});
-
-const Learnermodel = mongoose.model("LearnerCollection", LearnersSchema);
-
-const  Grade_PropertiesSave = new Grade_Propertiesmodel({
-  TeacherName: "Chad Hitchcock",
-  Title:"Mr",
-  address: "Diphagane",
-  teacher_number: "t5",
-  Teacher_Profile_Picture: "https://images.pexels.com/photos/9185400/pexels-photo-9185400.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1://images.pexels.com/photos/1557843/pexels-photo-1557843.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  Subject:"English",
-  Gender:"M",
-  grade_number:"9C",
-  email_adsress:"ronald@gmail.com",
-
-
-});
-
-const learnerSave = new Learnermodel(
-{
-  // LearnerT: learnerTeacher,
-  Gender:"F",
-
-  Leaner_Profile_Picture:"https://images.pexels.com/photos/7275385/pexels-photo-7275385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  address:"Jane Furse",
+ 
+    required: [true, "Check Employee Nationality Status"]
+},
+Employee_Department: {
+  type: String,
   
-  email_adsress:
-  "Goad-C@school.co.za",
-  
-  grade_number:
-  "9F",
-  Fist_Name: "Sammy",
-  Last_Name: "Phahlamohlaka",
-  Student_Number:currentSN
+  required: [true, "Check Employee Department Status"]
+},
+Employee_Leave_Days_total: {
+    type: String || Number,
+    minlength: 0,
+    maxlength: 3,
+    required: [true, "Check Employee Total Allocated Days"]
+},
+Employee_Leave_Days_Taken: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 3,
+  required: [true, "Check Employee Days Taken"]
+},
+Employee_Leave_Days_left: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 50,
+  required: [true, " Check Employee Days left"]
+},
+Employee_Home_Address: {
+  type: String,
+  required: [true, "Check Employee Home Address"]
+}, 
+Employee_FirstName: {
+  type: String,
+  required: [true, "Check Employee Home Address"]
+}, 
+Employee_LastName: {
+  type: String,
+  required: [true, "Check Employee Home Address"]
+}, 
+});
+const Payrollsmodel = mongoose.model("Payroll_ProCollection", PayrollSchema);
+// Loading Employye data
+
+var GenerateNumber = Math.floor(Math.random() * 900) + 100;
+// Combine the year and student number to create the employee number
+var EmployeeNumberModel = "2023" + GenerateNumber;
+
+
+const  PayrollSave = new Payrollsmodel({
+  Employee_Profile_Picture: "https://images.pexels.com/photos/9185400/pexels-photo-9185400.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1://images.pexels.com/photos/1557843/pexels-photo-1557843.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  Employee_email_adsress:"ronald@gmail.com",
+  Employee_number: EmployeeNumberModel,
+  EmployeeTitle: "Miss",
+  Employee_Tax_Number:"6974438665",
+  EpmloyyeID_Number: "9534678793567",
+  Epmloyye_Contact: "0798427568",
+  Epmloyye_Altenative_Contact:"0798427568",
+  Epmloyye_UIF: "4%",
+  Epmloyye_TAX: "23%",
+  Epmloyye_PAYE: "5%",
+  Epmloyye_SDL:"4%",
+  Epmloyye_hour_Rate:"450",
+  Epmloyye_Basic_Salary:"15000",
+  Epmloyye_Basic_Final_Salary:"from front end",
+  Epmloyye_Fines: "200",
+  Employee_CitizenShip:"South Africa",
+  Employee_Nationality:"South African",
+  Employee_Department: "IT",
+  Employee_Leave_Days_total: "30",
+  Employee_Leave_Days_Taken:"3",
+  Employee_Leave_Days_left: "from front end",
+  Employee_Home_Address: "Diphagane 1064",
+  Employee_LastName: "Lee",
+  Employee_FirstName: "Marry"
 
 
 });
+var ID_Checeke_Validator = "9534678793567"
 
+// Generate a random student number between 100 and 999
+let current_Employee_Number;
 
-// Model query for teacher prolile
-
-
-
-let Teacher_subjects;
-
-Grade_Propertiesmodel.find(function (err, Teachers) {
+// Find all the employees in the Payrollsmodel collection
+Payrollsmodel.find(function (err, Teachers) {
   if (err) {
     console.log(err);
   } else {
     Teachers.forEach(function (Teacher) {
-      Teacher_subjects = Teacher.Subject;
-       console.log(Teacher_subjects);
+      current_Employee_Number = Teacher.Employee_number;
+      // console.log(current_Employee_Number);
     });
-    // Here you can use the current_learner variable
-    // console.log("Current learner is: " + current_learner_Student);
-  }
-});
-
-
-let Teacher_Grade;
-Grade_Propertiesmodel.find(function (err, Teachers) {
-  if (err) {
-    console.log(err);
-  } else {
-    Teachers.forEach(function (Teacher) {
-      Teacher_Grade = Teacher.grade_number;
-       console.log(Teacher_Grade);
-    });
-    // Here you can use the current_learner variable
-    // console.log("Current learner is: " + current_learner_Student);
-  }
-});
-
-app.get('/', (req, res) => {
-  // res.sendfile('Mylearners.html'); 
-
-  Grade_Propertiesmodel.find(
+    // Here you can use the current_Employee_Number variable
+    // console.log("Current employee number is: " + current_Employee_Number);
     
-    { grade_number: ["9C","9F"] },
-    
-    function (err, leanerDetails) {
-
-    if (err) {
-      console.log(err)
-      
-    } else { console.log(leanerDetails)}
-
-    res.render("list", {listTitle: "Today", Learn: leanerDetails});
-
-
-  });
-  
-})
-
-// leaners stats model count
-app.get('/', (req, res) => {
-  // res.sendfile('Mylearners.html'); 
-
-  Learnermodel.find(
-    
-    { grade_number: ["9C","9F"] },
-    
-    function (err, leanerDetails) {
-
-    if (err) {
-      console.log(err)
-      
-    } else { console.log(leanerDetails)}
-
-    res.render("list", {listTitle: "Today", Learn: leanerDetails});
-
-
-  });
-  
-})
-
-
-
-// Model query for Leaners all
-// querying leaner by grade
-app.get('/Mylearners.html', (req, res) => {
-  // res.sendfile('Mylearners.html'); 
-
-  Learnermodel.find(
-    
-    { grade_number: ["9C","9F"] },
-    
-    function (err, leanerDetails) {
-
-    if (err) {
-      console.log(err)
-      
-    } else { console.log(leanerDetails)}
-
-    res.render("learners", {listTitle: "Today", Learn: leanerDetails});
-   
-
-  });
-
-  
-});
-
-// counting the numberr of learners
-
-app.get('/students', function(req, res) {
-  Learnermodel.find({}, function(err, students) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('students', { students: students });
-    }
-  });
-});
-
-
-
-// querying leaner by grade
-
-
-
-// querying Garde Proparties by informtion
-
-app.get("/", function(req, res) {
-  
-  
-    Learnermodel.find(
-      
-      { grade_number: ["9C","9F"] },
-      
-      function (err, leanerDetails) {
-  
+    // Check if employee already exists
+    Payrollsmodel.findOne({ $or: [{ EmployeeID_Number: ID_Checeke_Validator }, { Employee_number: current_Employee_Number }] }, function (err, Employee) {
       if (err) {
-        console.log(err)
-        
-      } else { console.log(leanerDetails)}
-  
-      res.render("list", {listTitle: "Today", Learn: leanerDetails});
-  
-  
-    })
-  // const day = date.getDate();
-  
-  
-  });
-  
-
-
-
-// adding new leaner
-app.post("/", function(req, res){
-
-  const   Fist_Name1 = req.body.newItem;
-  const learnerSave = new Learnermodel(
-    {
-      
-      // LearnerT: learnerTeacher,
-      Gender:"F",
-    
-      Leaner_Profile_Picture:"https://images.pexels.com/photos/7275385/pexels-photo-7275385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      address:"Jane Furse",
-      
-      email_adsress:
-      "Goad-C@school.co.za",
-      
-      grade_number:
-      "9F",
-      Fist_Name: Fist_Name1,
-      Last_Name: "Phahlamohlaka",
-      Student_Number:currentSN
-    
-    
+        console.log(err);
+      } else if (Employee) {
+        console.log("Employee already exists");
+      } else {
+        // Create a new Payroll document and save it to the database
+        // const newPayroll = new Payrollsmodel({
+        //   EmployeeID_Number: ID_Checeke_Validator,
+        //   Employee_number: current_Employee_Number,
+        //   // add any other fields to the document here
+        // });
+        // PayrollSave.save(function (err) {
+        //   if (err) {
+        //     console.log(err);
+        //   } else {
+        //     console.log("Employee added");
+        //   }
+        // });
+      }
     });
-
-//  learnerSave.save().then(() => res.redirect("/Mylearners.html"));
-
+  }
 });
-// deleting leaner
-app.post("/delete", function (req, res) {
-  const checkedid = req.body.checkbox;
-  Learnermodel.findByIdAndRemove(checkedid, function (err, docs) {
+
+app.get('/', (req, res) => {
+  Payrollsmodel.find(
+    { },
+    function (err, EmployeeDetails) {
     if (err) {
-      console.log(err);
-    } else {
-      console.log("Removed User : ", docs);
-      res.redirect("/Mylearners.html");
-    }
+      console.log(err) 
+    } else { console.log(EmployeeDetails)}
+    res.render("list", {listTitle: "Today", Learn: EmployeeDetails});
   });
 });
- const main = "Ronald438";
- const main2 = "PingOfDeathSA";
-
-// app.get("/work", function(req,res){
-//   res.render("list", {listTitle: "Work List", newListItems: workItems});
-// });
-
-// database validation
-app.listen(5000, function() {
-
-    
-  
+// Starting Sever
+app.listen(5000, function() {  
   console.log("Server started on port 5000");
-  
-  
 });
-// Learnermodel.find(
-  
-//   function (err, learners) {
+
+
+
+// Generate a random student number between 100 and 999
+//let current_Employee_Number;
+// Find all the employees in the Payrollsmodel collection
+// Payrollsmodel.find(function (err, EmployeesM) {
 //   if (err) {
-//       console.log(err);
+//     console.log(err);
 //   } else {
-//     learners.forEach(function (learner) {
-//         var Curren_leaner = learner.Student_Number 
-//       console.log(
-//           learner.Student_Number 
-//             );
-           
-  
+//     // Loop through each employee and store their employee number in the current_Employee_Number variable
+//     EmployeesM.forEach(function (Employee) {
+//       current_Employee_Number = Employee.Employee_Number;
+//     });
+//     // Here you can use the current_Employee_Number variable
+//   }
 // });
+
+
+// Payrollsmodel.save().then(() => console.log('Employee added'));
+// const fist_Name_VALIDATOR = "Sammy";
+// const last_Name_VALIDATOR = "Phahlamohlaka";
+// const STN_validator = current_Employee_Number
+
+
+
+
+
+
+
+
+// Learnermodel.find({ Last_Name: last_Name_VALIDATOR },{ Fist_Name: fist_Name_VALIDATOR },{ Student_Number: STN_validator }, function (err, learners) {
+//   if (learners.some((learner) => learner.Last_Name === last_Name_VALIDATOR) || learners.some((learner) => learner.Fist_Name === fist_Name_VALIDATOR) && learners.some((learner) => learner.Student_Number === STN_validator)) {
+//     console.log("Learner already exists");
+//   } else {
+//     //  console.log("Learner already add");
+//       // learnerSave.save().then(() => console.log('Learner added'));
 //   }
 // });
 
 
 
 
-// validator
-let current_learner_Student;
 
-Learnermodel.find(function (err, learners) {
-  if (err) {
-    console.log(err);
-  } else {
-    learners.forEach(function (learner) {
-      current_learner_Student = learner.Student_Number;
-      // console.log(current_learner_Student);
-    });
-    // Here you can use the current_learner variable
-    // console.log("Current learner is: " + current_learner_Student);
-  }
-});
-const fist_Name_VALIDATOR = "Sammy";
-const last_Name_VALIDATOR = "Phahlamohlaka";
-const STN_validator = current_learner_Student
+// // Model query for teacher prolile
 
 
 
+// let Teacher_subjects;
+
+// Grade_Propertiesmodel.find(function (err, Teachers) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     Teachers.forEach(function (Teacher) {
+//       Teacher_subjects = Teacher.Subject;
+//        console.log(Teacher_subjects);
+//     });
+//     // Here you can use the current_learner variable
+//     // console.log("Current learner is: " + current_learner_Student);
+//   }
+// });
+
+
+// let Teacher_Grade;
+// Grade_Propertiesmodel.find(function (err, Teachers) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     Teachers.forEach(function (Teacher) {
+//       Teacher_Grade = Teacher.grade_number;
+//        console.log(Teacher_Grade);
+//     });
+//     // Here you can use the current_learner variable
+//     // console.log("Current learner is: " + current_learner_Student);
+//   }
+// });
+
+// // app.get('/', (req, res) => {
+// //   // res.sendfile('Mylearners.html'); 
+
+// //   Grade_Propertiesmodel.find(
+    
+// //     { grade_number: ["9C","9F"] },
+    
+// //     function (err, leanerDetails) {
+
+// //     if (err) {
+// //       console.log(err)
+      
+// //     } else { console.log(leanerDetails)}
+
+// //     res.render("list", {listTitle: "Today", Learn: leanerDetails});
+
+
+// //   });
+  
+// // })
+
+
+// app.get('/', (req, res) => {
+//   // res.sendfile('Mylearners.html'); 
+
+//   Learnermodel.find(
+    
+//     { grade_number: ["9C","9F"] },
+    
+//     function (err, leanerDetails) {
+
+//     if (err) {
+//       console.log(err)
+      
+//     } else { console.log(leanerDetails)}
+
+//     res.render("list", {listTitle: "Today", Learn: leanerDetails});
+
+
+//   });
+  
+// })
+// // leaners stats model count
+// app.get('/', (req, res) => {
+//   // res.sendfile('Mylearners.html'); 
+
+//   Learnermodel.find(
+    
+//     { grade_number: ["9C","9F"] },
+    
+//     function (err, leanerDetails) {
+
+//     if (err) {
+//       console.log(err)
+      
+//     } else { console.log(leanerDetails)}
+
+//     res.render("list", {listTitle: "Today", Learn: leanerDetails});
+
+
+//   });
+  
+// })
 
 
 
+// // Model query for Leaners all
+// // querying leaner by grade
+// app.get('/Mylearners.html', (req, res) => {
+//   // res.sendfile('Mylearners.html'); 
+
+//   Learnermodel.find(
+    
+//     { grade_number: ["9C","9F"] },
+    
+//     function (err, leanerDetails) {
+
+//     if (err) {
+//       console.log(err)
+      
+//     } else { console.log(leanerDetails)}
+
+//     res.render("learners", {listTitle: "Today", Learn: leanerDetails});
+   
+
+//   });
+
+  
+// });
+
+// // counting the numberr of learners
+
+// app.get('/students', function(req, res) {
+//   Learnermodel.find({}, function(err, students) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.render('students', { students: students });
+//     }
+//   });
+// });
 
 
-Learnermodel.find({ Last_Name: last_Name_VALIDATOR },{ Fist_Name: fist_Name_VALIDATOR },{ Student_Number: STN_validator }, function (err, learners) {
-  if (learners.some((learner) => learner.Last_Name === last_Name_VALIDATOR) || learners.some((learner) => learner.Fist_Name === fist_Name_VALIDATOR) && learners.some((learner) => learner.Student_Number === STN_validator)) {
-    console.log("Learner already exists");
-  } else {
-    //  console.log("Learner already add");
-      learnerSave.save().then(() => console.log('Learner added'));
-  }
-});
+
+// // querying leaner by grade
 
 
 
+// // querying Garde Proparties by informtion
 
-
-
-// Deleting 
-// Learnermodel.deleteOne(
-//     { _id: "63eca4d68cb526dee3dle"}, {Gender: "M"},   
-//      function (err) {
-//              if (err) {console.log(err) 
-//             } else {
-//                 console.log("Delete is Succesful")
+// app.get("/", function(req, res) {
+  
+  
+//     Learnermodel.find(
+      
+//       { grade_number: ["9C","9F"] },
+      
+//       function (err, leanerDetails) {
+  
+//       if (err) {
+//         console.log(err)
         
-//              }
-            
-//             }
-//    )
-//  Grade_PropertiesSave.save().then(() => console.log('Grade_Properties added'));
+//       } else { console.log(leanerDetails)}
+  
+//       res.render("list", {listTitle: "Today", Learn: leanerDetails});
+  
+  
+//     })
+//   // const day = date.getDate();
+  
+  
+//   });
+  
 
-  //  learnerSave.save().then(() => console.log('Learner added'));
+
+
+// // adding new leaner
+// app.post("/", function(req, res){
+
+//   const   Fist_Name1 = req.body.newItem;
+//   const learnerSave = new Learnermodel(
+//     {
+      
+//       // LearnerT: learnerTeacher,
+//       Gender:"F",
+    
+//       Leaner_Profile_Picture:"https://images.pexels.com/photos/7275385/pexels-photo-7275385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+//       address:"Jane Furse",
+      
+//       email_adsress:
+//       "Goad-C@school.co.za",
+      
+//       grade_number:
+//       "9F",
+//       Fist_Name: Fist_Name1,
+//       Last_Name: "Phahlamohlaka",
+//       Student_Number:currentSN
+    
+    
+//     });
+
+// //  learnerSave.save().then(() => res.redirect("/Mylearners.html"));
+
+// });
+// // deleting leaner
+// app.post("/delete", function (req, res) {
+//   const checkedid = req.body.checkbox;
+//   Learnermodel.findByIdAndRemove(checkedid, function (err, docs) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Removed User : ", docs);
+//       res.redirect("/Mylearners.html");
+//     }
+//   });
+// });
+//  const main = "Ronald438";
+//  const main2 = "PingOfDeathSA";
+
+// // app.get("/work", function(req,res){
+// //   res.render("list", {listTitle: "Work List", newListItems: workItems});
+// // });
+
+// // database validation
+// app.listen(5000, function() {
+
+    
+  
+//   console.log("Server started on port 5000");
+  
+  
+// });
+// // Learnermodel.find(
+  
+// //   function (err, learners) {
+// //   if (err) {
+// //       console.log(err);
+// //   } else {
+// //     learners.forEach(function (learner) {
+// //         var Curren_leaner = learner.Student_Number 
+// //       console.log(
+// //           learner.Student_Number 
+// //             );
+           
+  
+// // });
+// //   }
+// // });
+
+
+
+
+// // validator
+// // let current_learner_Student;
+
+// // Learnermodel.find(function (err, learners) {
+// //   if (err) {
+// //     console.log(err);
+// //   } else {
+// //     learners.forEach(function (learner) {
+// //       current_learner_Student = learner.Student_Number;
+// //       // console.log(current_learner_Student);
+// //     });
+// //     // Here you can use the current_learner variable
+// //     // console.log("Current learner is: " + current_learner_Student);
+// //   }
+// // });
+// // const fist_Name_VALIDATOR = "Sammy";
+// // const last_Name_VALIDATOR = "Phahlamohlaka";
+// // const STN_validator = current_learner_Student
+
+
+
+
+
+
+
+
+// // Learnermodel.find({ Last_Name: last_Name_VALIDATOR },{ Fist_Name: fist_Name_VALIDATOR },{ Student_Number: STN_validator }, function (err, learners) {
+// //   if (learners.some((learner) => learner.Last_Name === last_Name_VALIDATOR) || learners.some((learner) => learner.Fist_Name === fist_Name_VALIDATOR) && learners.some((learner) => learner.Student_Number === STN_validator)) {
+// //     console.log("Learner already exists");
+// //   } else {
+// //     //  console.log("Learner already add");
+// //       // learnerSave.save().then(() => console.log('Learner added'));
+// //   }
+// // });
+
+
+
+
+
+
+// // Deleting 
+// // Learnermodel.deleteOne(
+// //     { _id: "63eca4d68cb526dee3dle"}, {Gender: "M"},   
+// //      function (err) {
+// //              if (err) {console.log(err) 
+// //             } else {
+// //                 console.log("Delete is Succesful")
+        
+// //              }
+            
+// //             }
+// //    )
+// //  Grade_PropertiesSave.save().then(() => console.log('Grade_Properties added'));
+
+//   //  learnerSave.save().then(() => console.log('Learner added'));
 
 
 
