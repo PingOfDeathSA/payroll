@@ -10,7 +10,11 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" href="public/css/style.css">
- 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
@@ -69,6 +73,12 @@
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3 sidebar-sticky sideM">
           <ul class="nav flex-column">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+              <span>Administration</span>
+              <a class="link-secondary" href="#" aria-label="Add a new report">
+                <span data-feather="plus-circle" class="align-text-bottom"></span>
+              </a>
+            </h6>
             <li class="nav-item ">
               <a class="nav-link active" aria-current="page" href="/">
                 <span data-feather="home" class="align-text-bottom"></span>
@@ -80,68 +90,24 @@
 
               <a class="nav-link" href="Mylearners.html">
                 <span data-feather="file" class="align-text-bottom"></span>
-                My Learners
+                Add New Employee
               
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link " href="subjects.html">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
-               Subjects
+               Payroll
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="content.html">
                 <span data-feather="users" class="align-text-bottom"></span>
-               Content
+               Leave Days
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Announce.html">
-                <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-                Announcemets
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="layers" class="align-text-bottom"></span>
-                Library
-              </a>
-            </li>
+          
             
-          </ul>
-  
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-            <span>Administration</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-              <span data-feather="plus-circle" class="align-text-bottom"></span>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text" class="align-text-bottom"></span>
-                Set Exam
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text" class="align-text-bottom"></span>
-                Upload Library Content
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text" class="align-text-bottom"></span>
-                Upload Term Content
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text" class="align-text-bottom"></span>
-               Create Announcement
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
@@ -169,16 +135,20 @@
         
         <div class="row">
           <div class="EmployeesHeader col-8">Employees</div>
-          <div class="col-4">        <form class="form-inline">
+          <div class="col-4"><form class="form-inline" action="/search" method="post" >
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <label for="search-input" class="sr-only">Search</label>
+              <input type="text" id="search-input" class="form-control" name="searchQueryName" placeholder="Search" autocomplete="on" required>
               <div class="input-group-append">
-                <button class="btn btn-dark" type="submit">
+                <button class="btn btn-dark" type="submit" aria-label="Search">
                   <i class="fas fa-search"></i>
                 </button>
               </div>
             </div>
           </form>
+          
+          
+          
           </div>
         </div>
 
@@ -186,46 +156,139 @@
   
         <table class="table table-striped">
           <thead class="bg-dark">
-          <tr>
-          <th class="textheader">Profile Picture</th>
-          <th class="textheader">Employee Number</th>
-          <th class="textheader">Fist Name</th>
-          <th class="textheader">Last Name</th>
-          <th class="textheader">Department</th>
-          <th class="textheader">Action</th>
-          <th class="textheader">Status</th>
-          </tr>
+            <tr>
+              <th class="textheader">Profile Picture</th>
+              <th class="textheader">Employee Number</th>
+              <th class="textheader">First Name</th>
+              <th class="textheader">Last Name</th>
+              <th class="textheader">Department</th>
+              <th class="textheader">Action</th>
+              <th class="textheader">Status</th>
+            </tr>
           </thead>
           <tbody>
-          <% Learn.forEach(function(item) { %>
-          <tr>
-            <td> <img class="ProfileP" src="<%= item.Employee_Profile_Picture %>" alt=""></td>
-            <td class="textpadding"><%= item.Employee_number %></td>
-            <td class="textpadding"><%= item.Employee_FirstName %></td>
-            <td class="textpadding"><%= item.Employee_LastName %></td>
-            <td class="textpadding"><%= item.Employee_Department %></td>
-   
-            
-            <td class="textpadding">
-              <button type="button" class="btn btn-success">Edit</button>
-              <button type="button" class="btn btn-danger">Delele</button>
-              
-            
-          </td>
-            <td style="vertical-align: middle;">
-       
-             
-                <button type="button" class="btn btn-dark">Pending</button>
-           
+            <% Learn.forEach(function(item) { %>
+              <tr>
+                <td>
+                  <img class="ProfileP" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
+                </td>
+                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_number %></td>
+                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_FirstName %></td>
+                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_LastName %></td>
+                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_Department %></td>
+                <td class="textpadding"  style="vertical-align: middle;">
+                  <div  class="row">
+                    <div class="col-4"> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal<%= item._id %>">Edit</button></div>
+                    <div class="col-4"> <form action="/delete" method="post">
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </form></div>
+                  </div>
+                 
+                 
+                </td>
+                <td style="vertical-align: middle;">
+                  <button type="button" class="btn btn-dark">Active</button>
+                </td>
+              </tr>
+              <style>
+                .modal-dialog {
+                    margin: 0%;
+                    position: absolute;
+                    top: 0%;
+                    left: 40%;
+                    transform: none;
+                    
+                }
+                
+            </style>
+              <!-- Modal -->
+              <div class="modal fade" id="popup<%= item._id %>"  tabindex="-1" role="dialog" aria-labelledby="popup<%= item._id %>Label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content ">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="popup<%= item._id %>Label"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5>
+                      <button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close"> Close
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="iNFORStyle">Employee Number: <%= item.Employee_number %></p>
+                      <p  class="iNFORStyle">Employee Home Address: <%= item.Employee_Home_Address %></p>
+                      <p class="iNFORStyle">Employee Email Address: <%= item.Employee_email_adsress %></p>
+                      <p class="iNFORStyle">Employee ID Number: <%= item.EpmloyyeID_Number %></p>
+                      <p class="iNFORStyle">Employee Contact Details: <%= item.Epmloyye_Contact %></p>
+                      <p class="iNFORStyle">Employee Alternative Contact Details: <%= item.Epmloyye_Altenative_Contact %></p>
+                      <p class="iNFORStyle">Department: <%= item.Employee_Department %></p>
+                      <p class="iNFORStyle">Employee Tax Number : <%= item.Employee_Tax_Number %></p>
+                      <p class="iNFORStyle">Employee UIF: <%= item.Epmloyye_UIF %></p>
+                      <p class="iNFORStyle">Employee Tax: <%= item.Epmloyye_TAX %></p>
+                      <p class="iNFORStyle">Employee PAYE: <%= item.Epmloyye_PAYE %></p>
+                      <p class="iNFORStyle">Employee SDL: <%= item.Epmloyye_SDL %></p>
+                      <p class="iNFORStyle">Employee Hourly Rate: <%= item.Epmloyye_hour_Rate %></p>
+                      <p class="iNFORStyle">Employee Basic Salary: <%= item.Epmloyye_Basic_Salary %></p>
+                      <p class="iNFORStyle">Employee Final Salary: <%= item.Epmloyye_Basic_Final_Salary %></p>
+                      <p class="iNFORStyle">Employee Fine: <%= item.Epmloyye_Fines %></p>
+                      <p class="iNFORStyle">Employee Citizenship: <%= item.Employee_CitizenShip %></p>
+                      <p class="iNFORStyle">Employee Nationality: <%= item.Employee_Nationality %></p>
+                      <p class="iNFORStyle">Employee Allocated Leave Days: <%= item.Employee_Leave_Days_total %></p>
+                      <p class="iNFORStyle">Employee Days Taken: <%= item.Employee_Leave_Days_Taken %></p>
+                      <p class="iNFORStyle">Employee Days Left: <%= item.Employee_Leave_Days_left %></p>
+                      <p class="iNFORStyle">Employee Nationality: <%= item.Employee_Nationality %></p>
+                     
+                      <!-- Add more information as needed -->
+                    </div>
+                    <div class="row">
+                      <div class="col-8"></div>
+                      <div class="col-4"> </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="editModal<%= item._id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editModalLabel">Edit Employee Details</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/edit" method="POST">
+                        <p>
+                          Employee Number: <input type="text" name="employeeNumber" value="<%= item.Employee_number %>">
+                        </p>
+                        <p>
+                          Employee Home Address: <input type="text" name="employeeHomeAddress" value="<%= item.Employee_Home_Address %>">
+                        </p>
+                        <p>
+                          Employee Email Address: <input type="text" name="employeeEmailAddress" value="<%= item.Employee_email_adsress %>">
+                        </p>
+                        <input type="hidden" name="id" value="<%= item._id %>">
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" value="Save" class="btn btn-primary">Save changes</button>
+                        </div>
+                        <!-- <input type="submit" value="Save"> -->
+                        
+                      </form>
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
 
-              
-            </td>
-          </tr>
-          <% }); %>
+
+          
+            <% }); %>
           </tbody>
           
-          </table>      
-        </body>
+        </table>
+        
+        <!-- Modal dialog -->
+         </body>
       
       
 

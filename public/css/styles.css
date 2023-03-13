@@ -2,8 +2,28 @@
   width: 90px;
   height: 90px;
   border-radius: 10%;
-
+  object-fit: cover;
 }
+.Marginremovepopup{
+  margin: 0px;
+  padding: 0px;
+  background-color: #727272;
+}
+
+
+.iNFORStyle {
+  background-color: white;
+  color: rgb(196, 173, 173);
+  padding: 4px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 100;
+}
+
+.modal-body:hover {
+  background-color: #f2f2f2;
+}
+
+
  /* popup */
  /* Style the modal background */
 .modal {
@@ -29,6 +49,7 @@ padding-top: 10%;
   width: 30%;
   text-align: center;
 }
+
 .textheader{
   color: #e2edf8;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -38,6 +59,7 @@ padding-top: 10%;
   
   vertical-align: middle;
 }
+
 .EmployeesHeader{
   color: #000000;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

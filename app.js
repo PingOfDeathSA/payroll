@@ -165,36 +165,36 @@ var EmployeeNumberModel = "2023" + GenerateNumber;
 
 
 const  PayrollSave = new Payrollsmodel({
-  Employee_Profile_Picture: "https://images.pexels.com/photos/9185400/pexels-photo-9185400.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1://images.pexels.com/photos/1557843/pexels-photo-1557843.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  Employee_email_adsress:"ronald@gmail.com",
+  Employee_Profile_Picture: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  Employee_email_adsress:"Mike@gmail.com",
   Employee_number: EmployeeNumberModel,
-  EmployeeTitle: "Miss",
-  Employee_Tax_Number:"6974438665",
-  EpmloyyeID_Number: "9534678793567",
-  Epmloyye_Contact: "0798427568",
-  Epmloyye_Altenative_Contact:"0798427568",
-  Epmloyye_UIF: "4%",
-  Epmloyye_TAX: "23%",
-  Epmloyye_PAYE: "5%",
-  Epmloyye_SDL:"4%",
-  Epmloyye_hour_Rate:"450",
-  Epmloyye_Basic_Salary:"15000",
+  EmployeeTitle: "Mr",
+  Employee_Tax_Number:"4474438665",
+  EpmloyyeID_Number: "7534678793567",
+  Epmloyye_Contact: "0998427568",
+  Epmloyye_Altenative_Contact:"0698427568",
+  Epmloyye_UIF: "9%",
+  Epmloyye_TAX: "27%",
+  Epmloyye_PAYE: "9%",
+  Epmloyye_SDL:"9%",
+  Epmloyye_hour_Rate:"650",
+  Epmloyye_Basic_Salary:"30000",
   Epmloyye_Basic_Final_Salary:"from front end",
-  Epmloyye_Fines: "200",
+  Epmloyye_Fines: "0",
   Employee_CitizenShip:"South Africa",
   Employee_Nationality:"South African",
-  Employee_Department: "IT",
+  Employee_Department: "Finance",
   Employee_Leave_Days_total: "30",
-  Employee_Leave_Days_Taken:"3",
+  Employee_Leave_Days_Taken:"1",
   Employee_Leave_Days_left: "from front end",
-  Employee_Home_Address: "Diphagane 1064",
-  Employee_LastName: "Lee",
-  Employee_FirstName: "Marry"
+  Employee_Home_Address: "Mshabela 1064",
+  Employee_LastName: "Mike",
+  Employee_FirstName: "Moon"
 
 
 });
-var ID_Checeke_Validator = "9534678793567"
-
+var ID_Checeke_Validator = "7534678793567"
+var employee_NumValidator = EmployeeNumberModel
 // Generate a random student number between 100 and 999
 let current_Employee_Number;
 
@@ -211,30 +211,82 @@ Payrollsmodel.find(function (err, Teachers) {
     // console.log("Current employee number is: " + current_Employee_Number);
     
     // Check if employee already exists
-    Payrollsmodel.findOne({ $or: [{ EmployeeID_Number: ID_Checeke_Validator }, { Employee_number: current_Employee_Number }] }, function (err, Employee) {
-      if (err) {
-        console.log(err);
-      } else if (Employee) {
-        console.log("Employee already exists");
+   
+
+    // Payrollsmodel.findOne({ $or: [{ EmployeeID_Number: ID_Checeke_Validator }, 
+    // ] }, function (err, Employee) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else if (Employee) {
+        
+    //     console.log("Employee already exists");
+    //   } else {
+    //     // Create a new Payroll document and save it to the database
+    //     // const newPayroll = new Payrollsmodel({
+    //     //   EmployeeID_Number: ID_Checeke_Validator,
+    //     //   Employee_number: current_Employee_Number,
+    //     //   // add any other fields to the document here
+    //     // });
+    //     // PayrollSave.save(function (err) {
+    //     //   if (err) {
+    //     //     console.log(err);
+    //     //   } else {
+    //     //     console.log("Employee added");
+    //     //   }
+    //     // });
+    //   }
+    // });
+  }
+});
+Payrollsmodel.find(
+  {$or: [{Employee_number: employee_NumValidator},]},
+  function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (EmployeeDetails.length > 0) {
+        console.log("Employee number exits "+EmployeeDetails[0].Employee_number);
+        
       } else {
-        // Create a new Payroll document and save it to the database
-        // const newPayroll = new Payrollsmodel({
-        //   EmployeeID_Number: ID_Checeke_Validator,
-        //   Employee_number: current_Employee_Number,
-        //   // add any other fields to the document here
-        // });
-        // PayrollSave.save(function (err) {
+        //     PayrollSave.save(function (err) {
         //   if (err) {
         //     console.log(err);
         //   } else {
         //     console.log("Employee added");
-        //   }
+        //               }
         // });
       }
-    });
+    }
   }
+);
+
+//Edit data from fornt end
+app.post('/edit', (req, res) => {
+  const id = req.body.id;
+  const employeeNumber = req.body.employeeNumber;
+  const employeeHomeAddress = req.body.employeeHomeAddress;
+  const employeeEmailAddress = req.body.employeeEmailAddress;
+
+  Payrollsmodel.findOneAndUpdate(
+    { _id: id },
+    {
+      Employee_number: employeeNumber,
+      Employee_Home_Address: employeeHomeAddress,
+      Employee_email_adsress: employeeEmailAddress
+    },
+    (err, employee) => {
+      if (err) {
+        console.log(err);
+        res.redirect('/error');
+      } else {
+        res.redirect('/');
+      }
+    }
+  );
 });
 
+
+//Geeting data from DB to Front End
 app.get('/', (req, res) => {
   Payrollsmodel.find(
     { },
@@ -249,6 +301,31 @@ app.get('/', (req, res) => {
 app.listen(5000, function() {  
   console.log("Server started on port 5000");
 });
+
+app.post('/search', (req, res) => {
+  const searchQuery = req.body.searchQueryName.toLowerCase();
+
+  console.log("Search Query: ", searchQuery);
+  Payrollsmodel.find(
+    { $or: [
+      { Employee_LastName: { $regex: searchQuery, $options: "i" } },
+      { Employee_FirstName: { $regex: searchQuery, $options: "i" } },
+      { Employee_Department: { $regex: searchQuery, $options: "i" } }
+    ]},
+    function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred while searching.");
+      } else {
+        console.log(EmployeeDetails);
+        res.render("list", { listTitle: "Today", Learn: EmployeeDetails });
+      }
+    }
+  );
+});
+
+
+
 
 
 
