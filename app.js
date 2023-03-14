@@ -307,7 +307,10 @@ app.get('/AddNewEmployee.html', (req, res) => {
     if (err) {
       console.log(err) 
     } else { console.log(EmployeeDetails)}
-    res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails});
+    res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails,
+    
+  
+  });
   });
 });
 
@@ -316,24 +319,37 @@ app.get('/AddNewEmployee.html', (req, res) => {
 //Edit data from fornt end
 app.post('/edit', (req, res) => {
   const id = req.body.id;
-  
+  const salaryAfterTaxQuery = req.body.EmployeeBasicAfterTax;
+  const EmployeTaxNumQuery = req.body.EmployeeTaxNumber;
+  const ContactsQuery = req.body.EpmloyyeContact;
+  const ProfileLinkQueryuery = req.body.EmployeeProfilePicture;
+  const ATNcontactsQuery = req.body.AlternativeContactDetails;
+  const EmplyoyeeIDquery =req.body.EpmloyyeIDNumber;
+  const EmployeeTaxQuery = req.body.EmployeeTax;
+  const MedicaalaidQuery = req.body.MedicalAid;
   const AllowanceQuery = req.body.Allowancee;
   const hourswoked = req.body.hoursWorked;
   const hourate = req.body.EpmloyyehourRate;
   const employeeBasicSalary = req.body.EpmloyyeBasicSalary;
-  const employeeNumber = req.body.employeeNumber;
   const employeeHomeAddress = req.body.employeeHomeAddress;
-  const employeeEmailAddress = req.body.employeeEmailAddress;
+  const employeeEmailAddress = req.body.Employeeemailadsress;
   console.log(AllowanceQuery)
 
   Payrollsmodel.findOneAndUpdate(
     { _id: id },
     {
+      Epmloyye_Basic_Final_Salary: salaryAfterTaxQuery,
+      Employee_Tax_Number: EmployeTaxNumQuery,
+      Epmloyye_Contact: ContactsQuery,
+      Employee_Profile_Picture: ProfileLinkQueryuery,
+      Epmloyye_Altenative_Contact:ATNcontactsQuery,
+      EpmloyyeID_Number: EmplyoyeeIDquery,
+      Epmloyye_TAX :EmployeeTaxQuery,
+      Medical_Aid: MedicaalaidQuery,
       Employee_Allowance:AllowanceQuery,
       Hours_worked:hourswoked,
       Epmloyye_hour_Rate: hourate,
       Epmloyye_Basic_Salary: employeeBasicSalary,
-      Employee_number: employeeNumber,
       Employee_Home_Address: employeeHomeAddress,
       Employee_email_adsress: employeeEmailAddress
       
@@ -358,7 +374,8 @@ app.get('/', (req, res) => {
     if (err) {
       console.log(err) 
     } else { console.log(EmployeeDetails)}
-    res.render("list", {listTitle: "Today", Learn: EmployeeDetails});
+    res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
+    });
   });
 });
 // Starting Sever

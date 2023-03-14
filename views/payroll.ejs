@@ -134,7 +134,7 @@
         
         <div class="row">
           <div class="EmployeesHeader col-8">Employees</div>
-          <div class="col-4"><form class="form-inline" action="/searchpayroll" method="post" >
+          <div class="col-2"><form class="form-inline" action="/searchpayroll" method="post" >
             <div class="input-group">
               <label for="search-input" class="sr-only">Search</label>
               <input type="text" id="search-input" class="form-control" name="searchQueryName" placeholder="Search" autocomplete="on" required>
@@ -149,6 +149,12 @@
           
           
           </div>
+          <div class="col-2">
+          
+            <button type="button" class="btn btn-dark">Download Report</button>
+          
+          </div>
+          
         </div>
 
         
@@ -184,6 +190,7 @@
                 <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_hour_Rate %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Hours_worked %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Employee_Allowance %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Medical_Aid %></td>
                 
               <% }); %>
           </tbody>
