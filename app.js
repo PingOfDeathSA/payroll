@@ -154,7 +154,29 @@ Employee_FirstName: {
 Employee_LastName: {
   type: String,
   required: [true, "Check Employee Home Address"]
+},
+Postion:{
+  type: String,
+  required:[true, "Check Employee Home Address"]
+},
+Hours_worked: {
+  type: String || Number,
+  minlength: 0,
+  maxlength: 4,
+  required: [true, " Check Employee Days left"]
 }, 
+Employee_Allowance:{
+  type: String || Number,
+  minlength: 0,
+  maxlength: 8,
+  required: [true, " Check Employee Days left"]
+},
+Medical_Aid:{
+  type: String || Number,
+  minlength: 0,
+  maxlength: 8,
+  required: [true, " Check Employee Days left"]
+},
 });
 const Payrollsmodel = mongoose.model("Payroll_ProCollection", PayrollSchema);
 // Loading Employye data
@@ -177,8 +199,8 @@ const  PayrollSave = new Payrollsmodel({
   Epmloyye_TAX: "27%",
   Epmloyye_PAYE: "9%",
   Epmloyye_SDL:"9%",
-  Epmloyye_hour_Rate:"650",
-  Epmloyye_Basic_Salary:"30000",
+  Epmloyye_hour_Rate:'',
+  Epmloyye_Basic_Salary:'',
   Epmloyye_Basic_Final_Salary:"from front end",
   Epmloyye_Fines: "0",
   Employee_CitizenShip:"South Africa",
@@ -189,7 +211,11 @@ const  PayrollSave = new Payrollsmodel({
   Employee_Leave_Days_left: "from front end",
   Employee_Home_Address: "Mshabela 1064",
   Employee_LastName: "Mike",
-  Employee_FirstName: "Moon"
+  Employee_FirstName: "Moon",
+  Hours_worked: "",
+  Postion:"",
+  Employee_Allowance:"",
+  Medical_Aid:"",
 
 
 });
@@ -260,19 +286,57 @@ Payrollsmodel.find(
   }
 );
 
+//Geeting data from DB to Front End to Add new employee
+app.get('/Payroll.html', (req, res) => {
+  Payrollsmodel.find(
+    { },
+    function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err) 
+    } else { console.log(EmployeeDetails)}
+    res.render("payroll", {listTitle: "Today", Learn: EmployeeDetails});
+  });
+});
+
+
+//Geeting data from DB to Front End to Add new employee
+app.get('/AddNewEmployee.html', (req, res) => {
+  Payrollsmodel.find(
+    { },
+    function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err) 
+    } else { console.log(EmployeeDetails)}
+    res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails});
+  });
+});
+
+
+
 //Edit data from fornt end
 app.post('/edit', (req, res) => {
   const id = req.body.id;
+  
+  const AllowanceQuery = req.body.Allowancee;
+  const hourswoked = req.body.hoursWorked;
+  const hourate = req.body.EpmloyyehourRate;
+  const employeeBasicSalary = req.body.EpmloyyeBasicSalary;
   const employeeNumber = req.body.employeeNumber;
   const employeeHomeAddress = req.body.employeeHomeAddress;
   const employeeEmailAddress = req.body.employeeEmailAddress;
+  console.log(AllowanceQuery)
 
   Payrollsmodel.findOneAndUpdate(
     { _id: id },
     {
+      Employee_Allowance:AllowanceQuery,
+      Hours_worked:hourswoked,
+      Epmloyye_hour_Rate: hourate,
+      Epmloyye_Basic_Salary: employeeBasicSalary,
       Employee_number: employeeNumber,
       Employee_Home_Address: employeeHomeAddress,
       Employee_email_adsress: employeeEmailAddress
+      
     },
     (err, employee) => {
       if (err) {
@@ -286,7 +350,7 @@ app.post('/edit', (req, res) => {
 });
 
 
-//Geeting data from DB to Front End
+//Geeting data from DB to Front End to mian page
 app.get('/', (req, res) => {
   Payrollsmodel.find(
     { },
@@ -319,6 +383,28 @@ app.post('/search', (req, res) => {
       } else {
         console.log(EmployeeDetails);
         res.render("list", { listTitle: "Today", Learn: EmployeeDetails });
+      }
+    }
+  );
+});
+//Payroll search
+app.post('/searchpayroll', (req, res) => {
+  const searchQuery = req.body.searchQueryName.toLowerCase();
+
+  console.log("Search Query: ", searchQuery);
+  Payrollsmodel.find(
+    { $or: [
+      { Employee_LastName: { $regex: searchQuery, $options: "i" } },
+      { Employee_FirstName: { $regex: searchQuery, $options: "i" } },
+      { Employee_Department: { $regex: searchQuery, $options: "i" } }
+    ]},
+    function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred while searching.");
+      } else {
+        console.log(EmployeeDetails);
+        res.render("payroll", { listTitle: "Today", Learn: EmployeeDetails });
       }
     }
   );

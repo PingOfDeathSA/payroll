@@ -6,6 +6,32 @@
 }
 
 
+.nav-tabs .nav-link.active {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.nav-tabs .nav-link {
+
+  color: #000000;
+}
+
+.nav-tabs .nav-link:hover {
+
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.nav-tabs .nav-link.active:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+
+
+
+
+
 .ProfileP2 {
   width: 130px;
   height: 130px;
@@ -13,7 +39,58 @@
   object-fit: cover;
   margin-top: 20%;
   margin-bottom: 20%;
+
+
 }
+.ProfileP3 {
+  width: 130px;
+  height: 130px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  border: solid;
+  border-color: #000000;
+  border-width: 10px;
+  border: 2px solid black;
+}
+.ProfileP4 {
+  width: 130px;
+  height: 130px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  border: solid;
+  border-color: #000000;
+  border-width: 10px;
+  border: 2px solid rgb(0, 0, 0);
+}
+.ProfileP5 {
+  width: 130px;
+  height: 130px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  border: solid;
+  border-color: #000000;
+  border-width: 10px;
+  border: 2px solid rgb(0, 0, 0);
+}
+.ProfileP6 {
+  width: 130px;
+  height: 130px;
+  border-radius: 10%;
+  object-fit: cover;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  border: solid;
+  border-color: #000000;
+  border-width: 10px;
+  border: 2px solid rgb(0, 0, 0);
+}
+
 .Marginremovepopup{
   margin: 0px;
   padding: 0px;
