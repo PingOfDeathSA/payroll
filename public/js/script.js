@@ -19,41 +19,18 @@ for (var i = 0; i < hours_worked_inputs.length; i++) {
 
 updateBasicSalary();
 
-function calculateTax(income) {
-  var tax = 0;
-  var taxPercentage = 0;
-  
-  if (income > 782200) {
-    tax = (income - 782200) * 0.39 + 209032;
-    taxPercentage = 39;
-  } else if (income > 613600) {
-    tax = (income - 613600) * 0.36 + 149475;
-    taxPercentage = 36;
-  } else if (income > 467500) {
-    tax = (income - 467500) * 0.31 + 97225;
-    taxPercentage = 31;
-  } else if (income > 337800) {
-    tax = (income - 337800) * 0.26 + 61910;
-    taxPercentage = 26;
-  } else if (income > 216200) {
-    tax = (income - 216200) * 0.18 + 33210;
-    taxPercentage = 18;
-  }
-  
-  return {
-    taxAmount: tax,
-    taxPercentage: taxPercentage
-  };
-}
-function updateEmployeeTax() {
-  var basicSalaryInput = document.querySelector(".basic-salary-input");
-  var Year_income = basicSalaryInput * 12;
-  var DeductiontTax = calculateTax(Year_income);
-  var YearIncomeAfterTax =  Year_income - DeductiontTax;
-var monthlyAfterTax = YearIncomeAfterTax /12;
-  console.log(monthlyAfterTax)
 
-}
+
+
+
+
+
+
+
+
+
+
+// call updateEmployeeTax initially to set the value
 
 
 

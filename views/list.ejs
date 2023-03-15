@@ -437,7 +437,7 @@
                             <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
                           </div>
                           
-                          <form action="/edit" method="POST">
+                          <form action="/EmployeeInfoUpdate" method="POST">
                             <div class="row">
                               <div class="col-12">
                                 <ul class="list-group" style="vertical-align: 50%;">
@@ -535,67 +535,25 @@
                               <img class="ProfileP6" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
                             </div>
                             <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                            <form action="/edit" method="POST">
+                            <form action="/EmployementInfoUpdate" method="POST">
                               <div class="row">
                                 <% var hours_worked = 0; %>
                                 <% var Basic_salary = hours_worked * item.Epmloyye_hour_Rate; %>
                                 <div class="col-6">
                                   <ul class="list-group" style="vertical-align: 50%;">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                      <h6>Basic Salary: </h6> 
-                                      <p class="btn btn-outline-warning">
-                                        <input type="text" class="basic-salary-input" name="EmployeeBasicSalary" value="<%= item.Employee_Basic_Salary %>">
-                                      </p>
+
+                                      <div class="row"> <div class="col-12">  <h6>Basic Salary Before Deductions: </h6> <div class="col-6"> <p class="btn btn-warning">
+                                        <span>R </span>  <input type="text" class="basic-salary-input" name="EmployeeBasicSalary" value="<%= item.Epmloyee_Basic_Salary %>" >
+                                      </p></div></div></div>
+                                     
+                                     
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                      <h6>Basic After Tax: </h6> 
-                                      <p class="btn btn-outline-warning">
-                                        <input type="text" class="basic-after-tax-input" name="EmployeeBasicAfterTax" value="<%= item.Epmloyye_Basic_Final_Salary %>" disabled>
-                                      </p>
-                                    </li>
+                                    
+                                   
                                   </ul>
                                   <script>
-                                    function calculateTax(income) {
-                                      var tax = 0;
-                                      var taxPercentage = 0;
-                                  
-                                      if (income > 782200) {
-                                        tax = (income - 782200) * 0.39 + 209032;
-                                        taxPercentage = 39;
-                                      } else if (income > 613600) {
-                                        tax = (income - 613600) * 0.36 + 149475;
-                                        taxPercentage = 36;
-                                      } else if (income > 467500) {
-                                        tax = (income - 467500) * 0.31 + 97225;
-                                        taxPercentage = 31;
-                                      } else if (income > 337800) {
-                                        tax = (income - 337800) * 0.26 + 61910;
-                                        taxPercentage = 26;
-                                      } else if (income > 216200) {
-                                        tax = (income - 216200) * 0.18 + 33210;
-                                        taxPercentage = 18;
-                                      }
-                                  
-                                      return {
-                                        taxAmount: tax,
-                                        taxPercentage: taxPercentage
-                                      };
-                                    }
-                                  
-                                    function updateEmployeeTax() {
-                                      var basicSalaryInput = document.querySelector(".basic-salary-input");
-                                      var basicAfterTaxInput = document.querySelector(".basic-after-tax-input");
-                                  
-                                      var Year_income = parseInt(basicSalaryInput.value) * 12;
-                                      var DeductiontTax = calculateTax(Year_income);
-                                      var YearIncomeAfterTax = Year_income - DeductiontTax.taxAmount;
-                                      var monthlyAfterTax = YearIncomeAfterTax / 12;
-                                  
-                                      basicAfterTaxInput.value = monthlyAfterTax.toFixed(2);
-                                    }
-                                  
-                                    var basicSalaryInput = document.querySelector(".basic-salary-input");
-                                    basicSalaryInput.addEventListener("input", updateEmployeeTax);
+                          
                                   </script>
                               </div>
                                   <div class="col-6">
@@ -603,7 +561,7 @@
                                       <li class="list-group-item d-flex justify-content-between align-items-center">
                                        <h6>Hourly Rate:  </h6> 
                                         <p class="btn btn-warning">
-                                          <span class="hourly-rate-input"><%= item.Epmloyye_hour_Rate %></span>
+                                          <span>R </span>  <span class="hourly-rate-input"><%= item.Epmloyye_hour_Rate %></span>
                                       </p>
                                       </li>
                                     </ul>
@@ -614,19 +572,78 @@
                                 <div class="col-6">
                                   <ul class="list-group" style="vertical-align: 50%;">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                     <h6>Hours Worked: </h6> 
+                                      <h6>Hours Worked: </h6> 
                                       <p class="btn btn-outline-warning">
-                                        <input type="text" class="hours-worked-input" minlength="0" maxlength="3" name="hoursWorked" value="<%= item.Hours_worked %>">
-                                    </p>
+                                        <input type="number" class="hours-worked-input"  minlength="0" maxlength="6"  name="hoursWorked" value="<%= item.Hours_worked %>" min="0" max="10000" step="1" pattern="[0-9]+" required >
+                                      </p>
                                     </li>
                                   </ul>
+                                  
                               </div>
                                   <div class="col-6">
-                                 
+                                    <ul class="list-group" style="vertical-align: 50%;">
+                                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                                       <h6>Medical Aid:</h6> 
+                                        <p class="btn btn-outline-warning">
+                                          <input type="number" class="madical-aid-input" minlength="0" maxlength="6"  name="MedicalAid" value="<%= item.Medical_Aid %>" min="0" max="10000" step="1" pattern="[0-9]+" required>
+                                          
+                                      </p>
+                                      </li>
+                                    </ul>
                                   </div>
                               </div>
-  
-                             
+
+                              <div class="row">
+                                <div class="col-6">
+                                  <ul class="list-group" style="vertical-align: 50%;">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      <h6>Fines:</h6>
+                                      <p class="btn btn-outline-warning">
+                                        <input type="number" class="fines-input" minlength="0" maxlength="6" name="finess" value="<%= item.Epmloyye_Fines %>" min="0" step="1" pattern="[0-9]+">
+                                      </p>
+                                    </li>
+                                  </ul>
+                                  
+                                  
+                              </div>
+                                  <div class="col-6">
+                                    <ul class="list-group" style="vertical-align: 50%;">
+                                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <h6> Montly Tax: </h6> 
+                                       
+                                        <p class="btn btn-warning">
+                                          <span>R </span><span class="basic-after-tax-input" name="EmployeeBasicAfterTax" ><%= item.Epmloyye_TAX %></span>
+                                        </p>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                 
+                              </div>
+
+                              <div class="row">
+                                <div class="col-6">
+                                  <ul class="list-group" style="vertical-align: 50%;">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      <h6>Allowance: </h6> 
+                                      <p class="btn btn-outline-warning">
+                                        <input type="number" class="basic-allowance-input" minlength="0" maxlength="6"  name="Allowancee" value="<%= item.Employee_Allowance %>" min="0" max="1000" step="1" pattern="[0-9]+" required>
+                                      </p>
+                                    </li>
+                                  </ul>
+                                  
+                              </div>
+                                  <div class="col-6">
+                                    <ul class="list-group" style="vertical-align: 50%;">
+                                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <h6> UIF: </h6> 
+                                       
+                                        <p class="btn btn-warning">
+                                          <span>R </span><span class="UIF-input" name="UIFF" ><%= item.Epmloyye_UIF %></span>
+                                        </p>
+                                      </li>
+                                    </ul>
+                                  </div>
+                              </div>
                               <input type="hidden" name="id" value="<%= item._id %>">
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -646,7 +663,7 @@
                             </div>
                             <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
                           </div>
-                          <form action="/edit" method="POST">
+                          <form action="/EmployementInfoUpdate" method="POST">
                       
 
                             <div class="row">
@@ -684,7 +701,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                  <h6> Salary Before Deductiions: </h6> 
                                   <p class="btn btn-warning">
-                                    <span class="basic-allowance-input" ><%= item.Epmloyye_Basic_Salary %></span>
+                                    <span class="basic-allowance-input" ><%= item.Epmloyee_Basic_Salary %></span>
                                   
                                 </li>
                               </ul>
@@ -692,7 +709,7 @@
                             </div>
                           
                           </div>
-                          <form action="/edit" method="POST">
+                          <form action="/EmployementInfoUpdate" method="POST">
                       
 
                             <div class="row">
@@ -700,8 +717,9 @@
                                 <ul class="list-group" style="vertical-align: 50%;">
                                   <li class="list-group-item d-flex justify-content-between align-items-center">
                                    <h6>Medical Aid:</h6> 
-                                    <p class="btn btn-outline-warning">
-                                      <input type="text" class="madical-aid-input" minlength="0" maxlength="3" name="MedicalAid" value="<%= item.Medical_Aid %>">
+                                    <p class="btn btn-warning">
+                                      <span>R </span><span class="madical-aid-input" name="MedicalAid" ><%= item.Medical_Aid %></span>
+                                      
                                   </p>
                                   </li>
                                 </ul>
@@ -710,8 +728,9 @@
                                   <ul class="list-group" style="vertical-align: 50%;">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                      <h6>Fines: </h6> 
-                                      <p class="btn btn-outline-warning">
-                                        <input type="text" class="basic-allowance-input" name="Allowancee" value="<%= item.Employee_Allowance %>">
+                                      <p class="btn btn-warning">
+                                        <span>R </span><span class="fines-input" name="Finess" ><%= item.Epmloyye_Fines %></span>
+                                        
                                     </li>
                                   </ul>
                                 </div>
@@ -721,75 +740,106 @@
                               <div class="col-6">
                                 <ul class="list-group" style="vertical-align: 50%;">
                                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                                   <h6>Tax Amount:</h6> 
-                                    <p class="btn btn-outline-warning">
-                                      <input type="text" class="tax-amount-input" name="taxAmount" value="">
-                                  </p>
+                                    <h6> Montly Tax: </h6> 
+                                   
+                                    <p class="btn btn-warning">
+                                      <span>R </span><span class="basic-after-tax-input" name="EmployeeBasicAfterTax" ><%= item.Epmloyye_TAX %></span>
+                                    </p>
                                   </li>
                                 </ul>
                               </div>
+                              <div class="col-6">
+                                <ul class="list-group" style="vertical-align: 50%;">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                  <h6>Salary After Deductions: </h6> 
+                                 
+                                  <p class="btn btn-warning">
+                                    <span>R </span><span class="basic-after-tax-input" name="EmployeeBasicAfterTax" ><%= item.Epmloyee_Basic_Final_Salary %></span>
+                                  </p>
+                                </li>
+                              </ul>
+                              </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                            
+                              <ul class="list-group" style="vertical-align: 50%;">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                  <h6> UIF: </h6> 
+                                 
+                                  <p class="btn btn-warning">
+                                    <span>R </span><span class="UIF-input" name="UIFF" ><%= item.Epmloyye_UIF %></span>
+                                  </p>
+                                </li>
+                              </ul>
+                              
+                          </div>
+                              <div class="col-6">
+                                
+                              </div>
+                             
                           </div>
 
                          
                             <input type="hidden" name="id" value="<%= item._id %>">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" value="Save" class="btn btn-success">Save changes</button>
+                                
                             </div>
                         </form>
                         </div>
                         <div class="tab-pane fade" id="Lead_<%= item._id %>" role="tabpanel" aria-labelledby="Leavedays-tab">
-                          <div class="row">
-                            <div class="col-3">
-                              <img class="ProfileP6" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
+                          
+                          <form action="/leavedays" method="POST">
+                            <div class="row">
+                              <div class="col-3">
+                                <img class="ProfileP6" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
+                              </div>
+                              <div class="col-3">
+                                <h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;">
+                                  <%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %>
+                                </h5>
+                              </div>
+                              <div class="col-6">
+                                <ul class="list-group" style="vertical-align: 50%;">
+                                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <h6>Days Allocated</h6>
+                                    <input type="number" class="btn btn-warning daysallocated" name="daysallocated" value="<%= item.Employee_Leave_Days_total %>" >
+                                  </li>
+                                </ul>
+                                
+                              </div>
                             </div>
-                           
-                            <div class="col-3"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                            <div class="col-6">
-                           
-                              <ul class="list-group" style="vertical-align: 50%;">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                 <h6> Days Alocated </h6> 
-                                  <p class="btn btn-warning">
-                                    <span class="daysalocated" ><%= item.Employee_Leave_Days_total %></span>
-                                  
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <form action="/edit" method="POST">
-                      
-
                             <div class="row">
                               <div class="col-6">
                                 <ul class="list-group" style="vertical-align: 50%;">
                                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                                   <h6>Days Taken:</h6> 
+                                    <h6>Days Taken:</h6> 
                                     <p class="btn btn-outline-warning">
-                                      <input type="text" class="days-taken" minlength="0" maxlength="3" name="daystaken" value="<%= item.Employee_Leave_Days_Taken %>">
-                                  </p>
+                                      <input type="number" class="days-taken" minlength="0" maxlength="3" min="0" max="30" name="daystaken" value="<%= item.Employee_Leave_Days_Taken %>" required title="Enter a number between 0 and 30.">
+
+                                    </p>
                                   </li>
                                 </ul>
-                            </div>
-                                <div class="col-6">
-                                  <ul class="list-group" style="vertical-align: 50%;">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                     <h6>Days Left: </h6> 
-                                      <p class="btn btn-outline-warning">
-                                        <input type="text" class="days-left" name="daysleft" value="<%= item.Employee_Leave_Days_left %>">
-                                    </li>
-                                  </ul>
-                                </div>
-                            </div>
-                           
+                              </div>
+                              <div class="col-6">
+                              <ul class="list-group" style="vertical-align: 50%;">
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <h6>Days Left: </h6> 
+                            <input type="number" class="btn btn-warning daysleft" name="daysleft"  value="<%= item.Employee_Leave_Days_left %>" >
+                          </li>
+                        </ul>
 
-                         
+
+                              
+                              </div>
+                            </div>
                             <input type="hidden" name="id" value="<%= item._id %>">
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" value="Save" class="btn btn-success">Save changes</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <button type="submit" value="Save" class="btn btn-success">Save changes</button>
                             </div>
-                        </form>
+                          </form>
                         </div>
                       </div>
               </div>

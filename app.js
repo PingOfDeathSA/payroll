@@ -92,13 +92,13 @@ Epmloyye_hour_Rate: {
   maxlength: 6,
   required: [true, "Check Employee Rate"]
 },
-Epmloyye_Basic_Salary: {
+Epmloyee_Basic_Salary: {
   type: String || Number,
   minlength: 0,
   maxlength: 50,
   required: [true, "Check Employee Basic Salary"]
 },
-Epmloyye_Basic_Final_Salary: {
+Epmloyee_Basic_Final_Salary: {
   type: String || Number,
   minlength: 0,
  
@@ -200,15 +200,15 @@ const  PayrollSave = new Payrollsmodel({
   Epmloyye_PAYE: "9%",
   Epmloyye_SDL:"9%",
   Epmloyye_hour_Rate:'',
-  Epmloyye_Basic_Salary:'',
-  Epmloyye_Basic_Final_Salary:"from front end",
+  Epmloyee_Basic_Salary:'',
+  Epmloyee_Basic_Final_Salary:"",
   Epmloyye_Fines: "0",
   Employee_CitizenShip:"South Africa",
   Employee_Nationality:"South African",
   Employee_Department: "Finance",
   Employee_Leave_Days_total: "30",
   Employee_Leave_Days_Taken:"1",
-  Employee_Leave_Days_left: "from front end",
+  Employee_Leave_Days_left: "",
   Employee_Home_Address: "Mshabela 1064",
   Employee_LastName: "Mike",
   Employee_FirstName: "Moon",
@@ -271,7 +271,7 @@ Payrollsmodel.find(
       console.log(err);
     } else {
       if (EmployeeDetails.length > 0) {
-        console.log("Employee number exits "+EmployeeDetails[0].Employee_number);
+        // console.log("Employee number exits "+EmployeeDetails[0].Employee_number);
         
       } else {
         //     PayrollSave.save(function (err) {
@@ -293,7 +293,9 @@ app.get('/Payroll.html', (req, res) => {
     function (err, EmployeeDetails) {
     if (err) {
       console.log(err) 
-    } else { console.log(EmployeeDetails)}
+    } else { 
+      // console.log(EmployeeDetails)
+    }
     res.render("payroll", {listTitle: "Today", Learn: EmployeeDetails});
   });
 });
@@ -306,7 +308,9 @@ app.get('/AddNewEmployee.html', (req, res) => {
     function (err, EmployeeDetails) {
     if (err) {
       console.log(err) 
-    } else { console.log(EmployeeDetails)}
+    } else {
+      //  console.log(EmployeeDetails)
+    }
     res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails,
     
   
@@ -317,28 +321,133 @@ app.get('/AddNewEmployee.html', (req, res) => {
 
 
 //Edit data from fornt end
-app.post('/edit', (req, res) => {
+app.post('/EmployementInfoUpdate', (req, res) => {
+
+  function calculateTax(income) {
+    var tax = 0;
+    var taxPercentage = 0;
+  
+    if (income > 782200) {
+      tax = (income - 782200) * 0.39 + 209032;
+      taxPercentage = 39;
+    } else if (income > 613600) {
+      tax = (income - 613600) * 0.36 + 149475;
+      taxPercentage = 36;
+    } else if (income > 467500) {
+      tax = (income - 467500) * 0.31 + 97225;
+      taxPercentage = 31;
+    } else if (income > 337800) {
+      tax = (income - 337800) * 0.26 + 61910;
+      taxPercentage = 26;
+    } else if (income > 216200) {
+      tax = (income - 216200) * 0.18 + 33210;
+      taxPercentage = 18;
+    }
+    return {
+      taxAmount: tax,
+      taxPercentage: taxPercentage
+    };
+  }
+const employeeBasicSalaryQeury = req.body.EmployeeBasicSalary;
+
+var YearIncome = employeeBasicSalaryQeury * 12;
+  var DeductiontTax = calculateTax(YearIncome);
+const { taxAmount, taxPercentage } = calculateTax(YearIncome);
+var monthlyTax = taxAmount / 12;
+console.log("Anual Tax To be deducted From anual Income: ", taxAmount);
+console.log("Tax Percentage: ", taxPercentage+"%");
+ console.log("YearIncome: ", DeductiontTax);
+ console.log("Montly Tax To be deducted From Income: ", monthlyTax.toFixed(2));
+ console.log("Salary before Tax " + employeeBasicSalaryQeury)
+ const salary_after_tax = employeeBasicSalaryQeury - monthlyTax;
+ console.log( "Salary after tax is " + salary_after_tax.toFixed(2))
+ 
+
+ const MedicaalaidQuery = req.body.MedicalAid;
+ console.log("medical is "+ MedicaalaidQuery)
+ console.log("medical is "+ req.body.MedicalAid)
+const FineQuery = req.body.finess
+console.log("Fine is "+ FineQuery)
+const AllowanceQuery = req.body.Allowancee;
+console.log("Allowance is "+ AllowanceQuery)
+
+
+
+
+
+
+// Define the calculateUIF function
+
+function calculateUIF(salary) {
+  if (salary < 17712) {
+
+    return salary * 0.01;
+  } else {
+    return 177.12;
+  }
+}
+
+//UIF Calculator
+// Calculate UIF for a salary of R17,712
+var uif = calculateUIF(salary);
+// Output the result
+
+
+
+var salaryAfteralldeductions = salary_after_tax - MedicaalaidQuery - FineQuery - uif;
+
+
+//UIF Calculator
+function calculateUIF(salary) {
+  if (salary < 1.7772) {
+    return 0;
+  } else if (salary < 17712) {
+    return salary * 0.01;
+  } else {
+    return 177.12;
+  }
+}
+
+// Calculate UIF for a salary of R17,712
+var salary = salaryAfteralldeductions;
+var uif = calculateUIF(salary);
+console.log("UIF amount: R" + uif.toFixed(2));
+
+
+
+var finalsalaryadding_allowance = salaryAfteralldeductions + parseInt(AllowanceQuery);
+
+console.log("Salary After Deductions " + salaryAfteralldeductions )
+console.log("Allowance is " + finalsalaryadding_allowance )
+
+// Calculating leavedays
+
+
+
+
   const id = req.body.id;
-  const salaryAfterTaxQuery = req.body.EmployeeBasicAfterTax;
+  
   const EmployeTaxNumQuery = req.body.EmployeeTaxNumber;
   const ContactsQuery = req.body.EpmloyyeContact;
   const ProfileLinkQueryuery = req.body.EmployeeProfilePicture;
   const ATNcontactsQuery = req.body.AlternativeContactDetails;
   const EmplyoyeeIDquery =req.body.EpmloyyeIDNumber;
-  const EmployeeTaxQuery = req.body.EmployeeTax;
-  const MedicaalaidQuery = req.body.MedicalAid;
-  const AllowanceQuery = req.body.Allowancee;
+  const EmployeeTaxQuery = monthlyTax.toFixed(2);
+
+  
   const hourswoked = req.body.hoursWorked;
   const hourate = req.body.EpmloyyehourRate;
-  const employeeBasicSalary = req.body.EpmloyyeBasicSalary;
+ 
   const employeeHomeAddress = req.body.employeeHomeAddress;
   const employeeEmailAddress = req.body.Employeeemailadsress;
-  console.log(AllowanceQuery)
+  // console.log("tax amount is " + salaryAfterTaxQuery + employeeBasicSalaryQeury )
 
   Payrollsmodel.findOneAndUpdate(
     { _id: id },
     {
-      Epmloyye_Basic_Final_Salary: salaryAfterTaxQuery,
+      Epmloyye_UIF:uif.toFixed(2),
+      Epmloyye_Fines: FineQuery,
+      Epmloyee_Basic_Final_Salary: finalsalaryadding_allowance.toFixed(2),
       Employee_Tax_Number: EmployeTaxNumQuery,
       Epmloyye_Contact: ContactsQuery,
       Employee_Profile_Picture: ProfileLinkQueryuery,
@@ -349,7 +458,89 @@ app.post('/edit', (req, res) => {
       Employee_Allowance:AllowanceQuery,
       Hours_worked:hourswoked,
       Epmloyye_hour_Rate: hourate,
-      Epmloyye_Basic_Salary: employeeBasicSalary,
+      Epmloyee_Basic_Salary: employeeBasicSalaryQeury,
+      Employee_Home_Address: employeeHomeAddress,
+      Employee_email_adsress: employeeEmailAddress
+      
+    },
+    (err, employee) => {
+      if (err) {
+        console.log(err);
+        res.redirect('/error');
+      } else {
+        res.redirect('/');
+      }
+    }
+  );
+});
+
+//Updating leavedays
+app.post('/leavedays', (req, res) => {
+  const id = req.body.id;
+  const daysTakenQuery = req.body.daystaken;
+  const daysallocatedqyuery = req.body.daysallocated;
+
+  const EmployeeLeaveDaysLeftQuery = daysallocatedqyuery - daysTakenQuery;
+
+  console.log("Employee ID: " + id);
+  console.log("Days taken: " + daysTakenQuery);
+  console.log("Days Left: " + EmployeeLeaveDaysLeftQuery);
+  console.log("Days Allocated: " + daysallocatedqyuery);
+  
+  Payrollsmodel.findOneAndUpdate(
+    { _id: id },
+    {
+      Employee_Leave_Days_total: daysallocatedqyuery,
+      Employee_Leave_Days_left: EmployeeLeaveDaysLeftQuery,
+      Employee_Leave_Days_Taken: daysTakenQuery
+    },
+    (err, employee) => {
+      if (err) {
+        console.log(err);
+        res.redirect('/error');
+      } else {
+        res.redirect('/');
+      }
+    }
+  );
+});
+
+
+app.post('/EmployeeInfoUpdate', (req, res) => {
+
+  const id = req.body.id;
+  
+  const EmployeTaxNumQuery = req.body.EmployeeTaxNumber;
+  const ContactsQuery = req.body.EpmloyyeContact;
+  const ProfileLinkQueryuery = req.body.EmployeeProfilePicture;
+  const ATNcontactsQuery = req.body.AlternativeContactDetails;
+  const EmplyoyeeIDquery =req.body.EpmloyyeIDNumber;
+  const EmployeeTaxQuery = req.body.EmployeeTax;
+  const MedicaalaidQuery = req.body.MedicalAid;
+  const AllowanceQuery = req.body.Allowancee;
+  const hourswoked = req.body.hoursWorked;
+  const hourate = req.body.EpmloyyehourRate;
+ 
+  const employeeHomeAddress = req.body.employeeHomeAddress;
+  const employeeEmailAddress = req.body.Employeeemailadsress;
+  // console.log("tax amount is " + salaryAfterTaxQuery + employeeBasicSalaryQeury )
+
+  Payrollsmodel.findOneAndUpdate(
+    { _id: id },
+    {
+    
+     
+      Employee_Tax_Number: EmployeTaxNumQuery,
+      Epmloyye_Contact: ContactsQuery,
+      Employee_Profile_Picture: ProfileLinkQueryuery,
+      Epmloyye_Altenative_Contact:ATNcontactsQuery,
+      EpmloyyeID_Number: EmplyoyeeIDquery,
+      Epmloyye_TAX :EmployeeTaxQuery,
+      Medical_Aid: MedicaalaidQuery,
+      Employee_Allowance:AllowanceQuery,
+      Hours_worked:hourswoked,
+      Epmloyye_hour_Rate: hourate,
+    
       Employee_Home_Address: employeeHomeAddress,
       Employee_email_adsress: employeeEmailAddress
       
@@ -373,7 +564,9 @@ app.get('/', (req, res) => {
     function (err, EmployeeDetails) {
     if (err) {
       console.log(err) 
-    } else { console.log(EmployeeDetails)}
+    } else { 
+      // console.log(EmployeeDetails)
+    }
     res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
     });
   });
@@ -398,7 +591,7 @@ app.post('/search', (req, res) => {
         console.log(err);
         res.status(500).send("An error occurred while searching.");
       } else {
-        console.log(EmployeeDetails);
+        // console.log(EmployeeDetails);
         res.render("list", { listTitle: "Today", Learn: EmployeeDetails });
       }
     }
@@ -420,7 +613,7 @@ app.post('/searchpayroll', (req, res) => {
         console.log(err);
         res.status(500).send("An error occurred while searching.");
       } else {
-        console.log(EmployeeDetails);
+        // console.log(EmployeeDetails);
         res.render("payroll", { listTitle: "Today", Learn: EmployeeDetails });
       }
     }

@@ -14,7 +14,8 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 
@@ -150,9 +151,9 @@
           
           </div>
           <div class="col-2">
-          
-            <button type="button" class="btn btn-dark">Download Report</button>
-          
+           <a href="#" onclick="downloadExcel()"> <button type="button" class="btn btn-success" >Download Excel</button></button></a>
+
+           
           </div>
           
         </div>
@@ -171,11 +172,12 @@
               <th style="width: 11%;" scope="col">Hours Worked</th>
               <th scope="col">Allowance</th>
               <th scope="col">Medical aid</th>
-              <th scope="col">Employee Tax</th>
+            
               <th scope="col">PAYE</th>
-              <th scope="col">SDL</th>
+              <th scope="col">UIF</th>
               <th scope="col">Fines</th>
               <th scope="col">Final Salary</th>
+             
             </tr>
           </thead>
           <tbody>
@@ -186,17 +188,49 @@
                 <td class=""  style="vertical-align: middle;"><%= item.Employee_LastName %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Postion %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Employee_Department %></td>
-                <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_Basic_Salary %></td>
-                <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_hour_Rate %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyee_Basic_Salary %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyee_hour_Rate %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Hours_worked %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Employee_Allowance %></td>
                 <td class=""  style="vertical-align: middle;"><%= item.Medical_Aid %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_TAX %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_UIF %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyye_Fines %></td>
+                <td class=""  style="vertical-align: middle;"><%= item.Epmloyee_Basic_Final_Salary %></td>
+          
                 
               <% }); %>
+              
+              
           </tbody>
           <script src="/js/script2.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
         </table>
         
+
+
+        <div class="row">
+          <div class="col-10"></div>
+          <div class="col-2">     <button type="button" class="btn btn-danger">
+            <%
+            var totalSalary = 0;
+            Learn.forEach(function(item) {
+              var salary = parseInt(item.Epmloyee_Basic_Final_Salary);
+              totalSalary += salary;
+            });
+          %>
+          
+          <h5>Total:R <%= totalSalary.toFixed(2) %></h5>
+          
+          
+            
+            
+  </button>
+          </div>
+        </div>
+   
   
         
         <!-- Modal dialog -->
