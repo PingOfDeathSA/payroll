@@ -1,3 +1,7 @@
+/* desktop view */
+@media screen and (min-width: 551px) {
+  /* CSS code for desktop view */
+  
 .ProfileP {
   width: 90px;
   height: 90px;
@@ -583,9 +587,122 @@ font-size: 18px;
 font-size: 15px;
 }
 }
-@media screen and (max-width: 575px) {
+/* @media screen and (max-width: 575px) {
 .schedule-table table tbody td.day {
 min-width: 135px;
 }
-}
+} */
 /* Time table style */
+
+.form-inline {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+  padding-bottom: 15px;
+  
+}
+
+.DownloadCSV{
+  position:absolute;
+  top: 16%;
+  overflow-x: auto;
+
+}
+
+.mobile-message {
+  display: none;
+}
+}
+
+/* mobile view */
+@media (max-width: 567px) {
+  /* Modify the table styles for screens smaller than 768px */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  /* Hide the table header when scrolling horizontally */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  table thead {
+    display: table-header-group !important;
+  }
+  table tbody {
+    display: none !important;
+  }
+  /* Display the table rows as blocks */
+  .text-right{
+    display: none !important;
+  }
+  .form-inline{
+    display: none !important;
+  }
+  .DownloadCSV{
+      display: none !important;
+  }
+  .mobile-message {
+    display: block;
+  }
+  .mobile-message {
+    
+    text-align: center;
+    background-size: cover; /* or contain, or set a specific value */
+    height: 500px; /* or any other value you want */
+    width:  300px; /* or any other value you want */
+    background: url('https://cdn-icons-png.flaticon.com/512/3588/3588348.png');
+    border-radius: 50%; /* makes it round */
+    background-size: cover; /* or contain, or set a specific value */
+    height: 500px; /* or any other value you want */
+    width:  300px; /* or any other value you want */
+    border-radius: 10%; /* make it round */
+    display: flex; /* center text vertically and horizontally */
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes jelly {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-10px) scale(1.1);
+  }
+}
+
+.mobile-message {
+  display: inline-block;
+  overflow: hidden;
+  animation: wind 2s ease-in-out alternate infinite;
+}
+
+/* @keyframes type {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+} */
+
+@keyframes wind {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(10px);
+  }
+}
+
+
+}
+
+
+

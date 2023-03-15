@@ -379,8 +379,9 @@ console.log("Allowance is "+ AllowanceQuery)
 // Define the calculateUIF function
 
 function calculateUIF(salary) {
-  if (salary < 17712) {
-
+  if (salary < 1.7772) {
+    return 0;
+  } else if (salary < 17712) {
     return salary * 0.01;
   } else {
     return 177.12;
@@ -394,10 +395,10 @@ var uif = calculateUIF(salary);
 
 
 
-var salaryAfteralldeductions = salary_after_tax - MedicaalaidQuery - FineQuery - uif;
+var salaryAfteralldeductions = salary_after_tax - MedicaalaidQuery - FineQuery;
 
 
-//UIF Calculator
+// UIF Calculator
 function calculateUIF(salary) {
   if (salary < 1.7772) {
     return 0;
@@ -415,7 +416,7 @@ console.log("UIF amount: R" + uif.toFixed(2));
 
 
 
-var finalsalaryadding_allowance = salaryAfteralldeductions + parseInt(AllowanceQuery);
+var finalsalaryadding_allowance = salaryAfteralldeductions + parseInt(AllowanceQuery) - uif ;
 
 console.log("Salary After Deductions " + salaryAfteralldeductions )
 console.log("Allowance is " + finalsalaryadding_allowance )

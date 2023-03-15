@@ -585,7 +585,7 @@
                                       <li class="list-group-item d-flex justify-content-between align-items-center">
                                        <h6>Medical Aid:</h6> 
                                         <p class="btn btn-outline-warning">
-                                          <input type="number" class="madical-aid-input" minlength="0" maxlength="6"  name="MedicalAid" value="<%= item.Medical_Aid %>" min="0" max="10000" step="1" pattern="[0-9]+" required>
+                                       <span>R </span>   <input type="number" class="madical-aid-input" minlength="0" maxlength="6"  name="MedicalAid" value="<%= item.Medical_Aid %>" min="0" max="10000" step="1" pattern="[0-9]+" required>
                                           
                                       </p>
                                       </li>
@@ -599,7 +599,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                       <h6>Fines:</h6>
                                       <p class="btn btn-outline-warning">
-                                        <input type="number" class="fines-input" minlength="0" maxlength="6" name="finess" value="<%= item.Epmloyye_Fines %>" min="0" step="1" pattern="[0-9]+">
+                                        <span>R </span>    <input type="number" class="fines-input" minlength="0" maxlength="6" name="finess" value="<%= item.Epmloyye_Fines %>" min="0" step="1" pattern="[0-9]+">
                                       </p>
                                     </li>
                                   </ul>
@@ -626,7 +626,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                       <h6>Allowance: </h6> 
                                       <p class="btn btn-outline-warning">
-                                        <input type="number" class="basic-allowance-input" minlength="0" maxlength="6"  name="Allowancee" value="<%= item.Employee_Allowance %>" min="0" max="1000" step="1" pattern="[0-9]+" required>
+                                        <span>R </span>  <input type="number" class="basic-allowance-input" minlength="0" maxlength="6"  name="Allowancee" value="<%= item.Employee_Allowance %>" min="0" max="1000" step="1" pattern="[0-9]+" required>
                                       </p>
                                     </li>
                                   </ul>
@@ -674,7 +674,7 @@
                                      <h6>Allowance: </h6> 
                                       <p class="btn btn-outline-warning">
                                      
-                                        <input type="text" class="basic-allowance-input" name="Allowancee" value="<%= item.Employee_Allowance %>">
+                                        <span>R </span>     <input type="text" class="basic-allowance-input" name="Allowancee" value="<%= item.Employee_Allowance %>">
                                     </li>
                                   </ul>
                                 </div>
@@ -701,7 +701,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                  <h6> Salary Before Deductiions: </h6> 
                                   <p class="btn btn-warning">
-                                    <span class="basic-allowance-input" ><%= item.Epmloyee_Basic_Salary %></span>
+                                    <span>R </span>  <span class="basic-allowance-input" ><%= item.Epmloyee_Basic_Salary %></span>
                                   
                                 </li>
                               </ul>
