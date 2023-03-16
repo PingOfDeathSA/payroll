@@ -21,161 +21,161 @@ const PayrollSchema = mongoose.Schema({
 
 Employee_Profile_Picture: {
     type: String,
-    required: [true, "Please provide a valid link for the Employee's profile picture"]
+    // required: [true, "Please provide a valid link for the Employee's profile picture"]
   },
 Employee_email_adsress:  {
       type: String,
-      required: [true, "Check  Employee Email missing"]
+      // required: [true, "Check  Employee Email missing"]
     },
 Employee_number: {
       type: String,
-      required: [true, "Check Employee Number missing missing"]
+      // required: [true, "Check Employee Number missing missing"]
     },
 EmployeeTitle:{
       type:String,
       minlength: 2,
       maxlength: 5,
-      required: [true, "Check Employee title Enter Title"],
+      // required: [true, "Check Employee title Enter Title"],
     },
 Employee_Tax_Number: 
       {
         type: String || Number,
         min:10,
         max: 10,
-        required: [true, "Check Employee TAX number"],
+        // required: [true, "Check Employee TAX number"],
       },
 EpmloyyeID_Number: {
         type: String || Number,
         minlength: 13,
         maxlength: 13,
-        required: [true, "Check Check Employee ID Number"]
+        // required: [true, "Check Check Employee ID Number"]
     },
 Epmloyye_Contact: {
       type: String || Number,
       minlength: 10,
       maxlength: 10,
-      required: [true, "Check Employee Contact Details"]
+      // required: [true, "Check Employee Contact Details"]
   },
 Epmloyye_Altenative_Contact: {
     type: String || Number,
     minlength: 10,
     maxlength: 10,
-    required: [true, "Check Employee Contact Alternative Details"]
+    // required: [true, "Check Employee Contact Alternative Details"]
 },
 Epmloyye_UIF: {
   type: String || Number,
   minlength: 0,
   maxlength: 10,
-  required: [true, "Check Employee UIF"]
+  // required: [true, "Check Employee UIF"]
 },
 Epmloyye_TAX: {
   type: String || Number,
   minlength: 0,
   maxlength: 10,
-  required: [true, "Check Employee UIF Tax Number"]
+  // required: [true, "Check Employee UIF Tax Number"]
 },
 Epmloyye_PAYE: {
   type: String || Number,
   minlength: 0,
   maxlength: 13,
-  required: [true, "Check Employee PAYE"]
+  // required: [true, "Check Employee PAYE"]
 },
 Epmloyye_SDL: {
   type: String || Number,
   minlength: 0,
   maxlength: 10,
-  required: [true, "Check Employee SDL"]
+  // required: [true, "Check Employee SDL"]
 },
 Epmloyye_hour_Rate: {
   type: String,
   minlength: 0,
   maxlength: 6,
-  required: [true, "Check Employee Rate"]
+  // required: [true, "Check Employee Rate"]
 },
 Epmloyee_Basic_Salary: {
   type: String || Number,
   minlength: 0,
   maxlength: 50,
-  required: [true, "Check Employee Basic Salary"]
+  // required: [true, "Check Employee Basic Salary"]
 },
 Epmloyee_Basic_Final_Salary: {
   type: String || Number,
   minlength: 0,
  
-  required: [true, "Check Employee Final Basic Salary"]
+  // required: [true, "Check Employee Final Basic Salary"]
 },
 Epmloyye_Fines: {
   type: String || Number,
   minlength: 0,
   maxlength: 13,
-  required: [true, " Check Employee Fines"]
+  // required: [true, " Check Employee Fines"]
 },
 Employee_CitizenShip: {
       type: String,
       
-      required: [true, "Check Employee Citizenship Status"]
+      // required: [true, "Check Employee Citizenship Status"]
   },
   Employee_Nationality: {
     type: String,
  
-    required: [true, "Check Employee Nationality Status"]
+    // required: [true, "Check Employee Nationality Status"]
 },
 Employee_Department: {
   type: String,
   
-  required: [true, "Check Employee Department Status"]
+  // required: [true, "Check Employee Department Status"]
 },
 Employee_Leave_Days_total: {
     type: String || Number,
     minlength: 0,
     maxlength: 3,
-    required: [true, "Check Employee Total Allocated Days"]
+    // required: [true, "Check Employee Total Allocated Days"]
 },
 Employee_Leave_Days_Taken: {
   type: String || Number,
   minlength: 0,
   maxlength: 3,
-  required: [true, "Check Employee Days Taken"]
+  // required: [true, "Check Employee Days Taken"]
 },
 Employee_Leave_Days_left: {
   type: String || Number,
   minlength: 0,
   maxlength: 50,
-  required: [true, " Check Employee Days left"]
+  // required: [true, " Check Employee Days left"]
 },
 Employee_Home_Address: {
   type: String,
-  required: [true, "Check Employee Home Address"]
+  // required: [true, "Check Employee Home Address"]
 }, 
 Employee_FirstName: {
   type: String,
-  required: [true, "Check Employee Home Address"]
+  // required: [true, "Check Employee Home Address"]
 }, 
 Employee_LastName: {
   type: String,
-  required: [true, "Check Employee Home Address"]
+  // required: [true, "Check Employee Home Address"]
 },
 Postion:{
   type: String,
-  required:[true, "Check Employee Home Address"]
+  // required:[true, "Check Employee Home Address"]
 },
 Hours_worked: {
   type: String || Number,
   minlength: 0,
   maxlength: 4,
-  required: [true, " Check Employee Days left"]
+  // required: [true, " Check Employee Days left"]
 }, 
 Employee_Allowance:{
   type: String || Number,
   minlength: 0,
   maxlength: 8,
-  required: [true, " Check Employee Days left"]
+  // required: [true, " Check Employee Days left"]
 },
 Medical_Aid:{
   type: String || Number,
   minlength: 0,
   maxlength: 8,
-  required: [true, " Check Employee Days left"]
+  // required: [true, " Check Employee Days left"]
 },
 });
 const Payrollsmodel = mongoose.model("Payroll_ProCollection", PayrollSchema);
@@ -312,6 +312,22 @@ app.get('/AddNewEmployee.html', (req, res) => {
       //  console.log(EmployeeDetails)
     }
     res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails,
+    
+  
+  });
+  });
+});
+
+app.get('/LeavedaysAdmin.html', (req, res) => {
+  Payrollsmodel.find(
+    { },
+    function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err) 
+    } else {
+      //  console.log(EmployeeDetails)
+    }
+    res.render("leavedays", {listTitle: "Today", Learn: EmployeeDetails,
     
   
   });
@@ -554,6 +570,72 @@ app.post('/EmployeeInfoUpdate', (req, res) => {
   );
 });
 
+app.post("/Addnewemployee", function(req, res){
+      const  Fist_NameQuery = req.body.FirstName;
+      const  LastNamneQuery = req.body.LastName;
+      const  ImagelinkQuery = req.body.Imagelink;
+      const  EmailaddressQuery = req.body.Emailaddress;
+      const ContactNumberQuery = req.body.Contactnumber;
+      const AternatviContactsQuery = req.body.alternativecontacts;
+      const IDNoQuery = req.body.IDNo;
+      const TAXQuery = req.body.TaxNo;
+      const NatinalityQuery = req.body.Natinality;
+      const TitleQuery = req.body.Title;
+      const HomeaddressQuery = req.body.Homeaddress;
+      const HourrateQuery = req.body.Hourrate;
+      const JobTitleQuery = req.body.JobTitle;
+      const DepartmentbodyQuery = req.body.Departmentbody;
+      const DaysallowqueryQuery = req.body.daysAllocated;
+      console.log(Fist_NameQuery)
+      console.log(LastNamneQuery)
+      console.log(ImagelinkQuery)
+      console.log(EmailaddressQuery)
+      console.log(ContactNumberQuery)
+      console.log(AternatviContactsQuery)
+      console.log(IDNoQuery)
+      console.log(TAXQuery)
+      console.log(NatinalityQuery)
+      console.log(TitleQuery)
+      console.log(HomeaddressQuery)
+      console.log(HourrateQuery)
+      console.log(JobTitleQuery)
+      console.log(DepartmentbodyQuery)
+      console.log(DaysallowqueryQuery)
+  const PayrollSave = new Payrollsmodel(
+    {
+      Employee_Profile_Picture: ImagelinkQuery,
+      Employee_email_adsress: EmailaddressQuery,
+      Employee_number: EmployeeNumberModel,
+      EmployeeTitle: TitleQuery,
+      Employee_Tax_Number: TAXQuery,
+      EpmloyyeID_Number: IDNoQuery,
+      Epmloyye_Contact: ContactNumberQuery,
+      Epmloyye_Altenative_Contact:AternatviContactsQuery,
+      Epmloyye_UIF: "0",
+      Epmloyye_TAX: "0",
+      Epmloyye_PAYE: "0",
+      Epmloyye_SDL:"0",
+      Epmloyye_hour_Rate:HourrateQuery,
+      Epmloyee_Basic_Salary:'0',
+      Epmloyee_Basic_Final_Salary:"0",
+      Epmloyye_Fines: "0",
+      Employee_CitizenShip:"South Africa",
+      Employee_Nationality: NatinalityQuery,
+      Employee_Department: DepartmentbodyQuery,
+      Employee_Leave_Days_total: DaysallowqueryQuery,
+      Employee_Leave_Days_Taken:"0",
+      Employee_Leave_Days_left: "0",
+      Employee_Home_Address: HomeaddressQuery,
+      Employee_LastName: LastNamneQuery,
+      Employee_FirstName: Fist_NameQuery,
+      Hours_worked: "0",
+      Postion: JobTitleQuery,
+      Employee_Allowance:"0",
+      Medical_Aid:"0",
+    });
+  PayrollSave.save().then(() => res.redirect("/"));
+});
+
 
 //Geeting data from DB to Front End to mian page
 app.get('/', (req, res) => {
@@ -613,6 +695,27 @@ app.post('/searchpayroll', (req, res) => {
       } else {
         // console.log(EmployeeDetails);
         res.render("payroll", { listTitle: "Today", Learn: EmployeeDetails });
+      }
+    }
+  );
+});
+app.post('/searchpaLeave', (req, res) => {
+  const searchQuery = req.body.searchQueryName.toLowerCase();
+
+  console.log("Search Query: ", searchQuery);
+  Payrollsmodel.find(
+    { $or: [
+      { Employee_LastName: { $regex: searchQuery, $options: "i" } },
+      { Employee_FirstName: { $regex: searchQuery, $options: "i" } },
+   
+    ]},
+    function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred while searching.");
+      } else {
+        // console.log(EmployeeDetails);
+        res.render("leavedays", { listTitle: "Today", Learn: EmployeeDetails });
       }
     }
   );

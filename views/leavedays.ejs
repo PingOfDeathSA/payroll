@@ -96,13 +96,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/Payroll.html">
+              <a class="nav-link " href="/Payroll.html">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
                Payroll
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/LeavedaysAdmin.html">
+              <a class="nav-link active" href="/LeavedaysAdmin.html">
                 <span data-feather="users" class="align-text-bottom"></span>
                Leave Days Admin
               </a>
@@ -114,7 +114,7 @@
   
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Payroll Adimn</h1>
+          <h1 class="h2">Leave Days Adimn</h1>
          
             </button>
           <div class="btn-toolbar mb-2 mb-md-0">
@@ -136,7 +136,7 @@
         
         <div class="row">
           <div class="EmployeesHeader">Employees</div>
-          <div class=""><form class="form-inline" action="/searchpayroll" method="post" >
+          <div class=""><form class="form-inline" action="/searchpaLeave" method="post" >
             <div class="input-group">
               
               <input type="text" id="search-input" class="form-control" name="searchQueryName" placeholder="Search" autocomplete="on" required>
@@ -160,45 +160,41 @@
           
          </div>
         
-        <table class="table">
+        <table class="table table-striped">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Employee No</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Position</th>
-              <th scope="col">Department</th>
-              <th scope="col">Basic Salary</th>
-              <th scope="col">Hourly Rate</th>
-              <th style="width: 11%;" scope="col">Hours Worked</th>
-              <th scope="col">Allowance</th>
-              <th scope="col">Medical aid</th>
-            
-              <th scope="col">PAYE</th>
-              <th scope="col">UIF</th>
-              <th scope="col">Fines</th>
-              <th scope="col">Final Salary</th>
-             
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Allocated Days</th>
+              <th scope="col">Days taken</th>
+              <th scope="col">Days left</th>
+           
             </tr>
           </thead>
           <tbody>
             <% Learn.forEach(function(item) { %>
               <tr>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_number %></td>
                 <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_FirstName %></td>
                 <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_LastName %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Postion %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_Department %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyee_Basic_Salary %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_hour_Rate %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Hours_worked %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Employee_Allowance %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Medical_Aid %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_TAX %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_UIF %></td>
-                <td class="table-text" style="vertical-align: middle;">R <%= item.Epmloyye_Fines %></td>
-              <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyee_Basic_Final_Salary %></td>
-          
+                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_Leave_Days_total %></td>
+                <td class="table-text" style="vertical-align: middle;">
+                  <% if (item.Employee_Leave_Days_Taken < 5) { %>
+                    <span class="badge badge-success badge-pill"><%= item.Employee_Leave_Days_Taken %></span>
+                  <% } else { %>
+                    <%= item.Employee_Leave_Days_Taken %>
+                  <% } %>
+                </td>
+                
+                <td class="table-text" style="vertical-align: middle;">
+                  <% if (item.Employee_Leave_Days_left < 5) { %>
+                      <span class="badge badge-danger badge-pill"><%= item.Employee_Leave_Days_left %></span>
+                  <% } else { %>
+                      <%= item.Employee_Leave_Days_left %>
+                  <% } %>
+              </td>
+              
+                
+
                 
               <% }); %>
               
@@ -218,11 +214,11 @@
           <button type="button" class="btn btn-danger" style="float: right;">
             <% var totalSalary = 0;
                Learn.forEach(function(item) {
-                 var salary = parseInt(item.Epmloyee_Basic_Final_Salary);
+                 var salary = parseInt(item.Employee_Leave_Days_Taken);
                  totalSalary += salary;
                });
             %>
-            <h5>Total:R <%= totalSalary.toFixed(2) %></h5>
+            <h5>Total No. of Days <%= totalSalary.toFixed(2) %></h5>
           </button>
         </div>
         

@@ -102,7 +102,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="content.html">
+              <a class="nav-link" href="/LeavedaysAdmin.html">
                 <span data-feather="users" class="align-text-bottom"></span>
                Leave Days Admin
               </a>
@@ -672,9 +672,9 @@
                                   <ul class="list-group" style="vertical-align: 50%;">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                      <h6>Allowance: </h6> 
-                                      <p class="btn btn-outline-warning">
-                                     
-                                        <span>R </span>     <input type="text" class="basic-allowance-input" name="Allowancee" value="<%= item.Employee_Allowance %>">
+                                      <p class="btn btn-warning">
+                                        <span>R </span><span class="basic-allowance-input" name="Allowancee" ><%= item.Employee_Allowance %></span>
+                             
                                     </li>
                                   </ul>
                                 </div>
@@ -684,7 +684,7 @@
                             <input type="hidden" name="id" value="<%= item._id %>">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" value="Save" class="btn btn-success">Save changes</button>
+                              
                             </div>
                         </form>
                         </div>

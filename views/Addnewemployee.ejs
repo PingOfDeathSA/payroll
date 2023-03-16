@@ -101,7 +101,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="content.html">
+              <a class="nav-link" href="/LeavedaysAdmin.html">
                 <span data-feather="users" class="align-text-bottom"></span>
                Leave Days Admin
               </a>
@@ -115,7 +115,7 @@
   
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Employee Admin</h1>
+          <h1 class="h2">Administration</h1>
          
             </button>
           <div class="btn-toolbar mb-2 mb-md-0">
@@ -136,377 +136,220 @@
         
         <div class="row">
           <div class="EmployeesHeader col-8">Employees</div>
-          <div class="col-4"><form class="form-inline" action="/search" method="post" >
-            <div class="input-group">
-              <label for="search-input" class="sr-only">Search</label>
-              <input type="text" id="search-input" class="form-control" name="searchQueryName" placeholder="Search" autocomplete="on" required>
-              <div class="input-group-append">
-                <button class="btn btn-dark" type="submit" aria-label="Search">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          <div class="col-4">
           
           
           
           </div>
         </div>
 
-        
-  
-        <table class="table table-striped">
-          <thead class="bg-dark">
-            <tr>
-              <th class="textheader">Profile Picture</th>
-              <th class="textheader">Employee Number</th>
-              <th class="textheader">First Name</th>
-              <th class="textheader">Last Name</th>
-              <th class="textheader">Department</th>
-              <th class="textheader">Action</th>
-              <th class="textheader">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% Learn.forEach(function(item) { %>
-              <tr>
-                <td>
-                  <img class="ProfileP" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-                </td>
-                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_number %></td>
-                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_FirstName %></td>
-                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_LastName %></td>
-                <td class="textpadding"  style="vertical-align: middle;"><%= item.Employee_Department %></td>
-                <td class="textpadding"  style="vertical-align: middle;">
-                  <div  class="row">
-                    <div class="col-4"> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModal<%= item._id %>">Edit</button></div>
-                    <div class="col-4"> <form action="/delete" method="post">
-                      <button type="button" class="btn btn-danger">Delete</button>
-                    </form></div>
-                  </div>
-                 
-                 
-                </td>
-                <td style="vertical-align: middle;">
-                  <button type="button" class="btn btn-dark">Active</button>
-                </td>
-              </tr>
+        <section class="AddNewEmployee">
+          <form class="needs-validation" action="/Addnewemployee" method="post" novalidate>
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom01">First name</label>
+                <input type="text" class="form-control" id="validationCustom01" name="FirstName" placeholder="First name" required>
+                <div class="invalid-feedback">
+                  Please enter First Name
+                </div>
+              </div>
+            
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom02">Last name</label>
+                <input type="text" class="form-control" id="validationCustom02" name="LastName" placeholder="Last name"   required>
+                <div class="invalid-feedback">
+                  Please enter Enter Last Name
+                </div>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label for="validationCustomTitle">Title</label>
+                <input type="text" class="form-control" id="validationCustomTitle" name="Title" placeholder="Title" pattern="[a-zA-Z][a-zA-Z '-]*" required>
+                <div class="invalid-feedback">
+                  Please enter a valid title.
+                </div>
+              </div>
+              
 
               
-              <style>
-                .modal-dialog {
-                    margin: 0%;
-                    position: absolute;
-                    top: 0%;
-                    left: 30%;
-                    transform: none;
-                    width: 100%;
-                    height: 100%;
-                    
-                    
-                }.modal-body{
-                  height: 700px;
-                }
-                
-            </style>
-              <!-- Modal -->
-              <div class="modal fade" id="popup<%= item._id %>" tabindex="-1" role="dialog" aria-labelledby="popup<%= item._id %>Label" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="popup<%= item._id %>Label"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5>
-                      <button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close"> Close
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    
-                    <div class="modal-body">
-                      <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                          <li class="nav-item">
-                            <a class="nav-link active"  data-toggle="tab" href="#EmployeeInfo_<%= item._id %>" role="tab">Employee Info</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#EmploymentInfo_<%= item._id %>" role="tab">Emyloyment info</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#Allowance_<%= item._id %>" role="tab">Allowance</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#Deductions_<%= item._id %>" role="tab">Deductions</a>
-                          </li>
-                        </ul>
-                        <!-- Tab panes -->
-                      <div class="tab-content">
-                        <div class="border border-dark tab-pane active" id="EmployeeInfo_<%= item._id %>" role="tabpanel">
-                          <div class="row">
-                            <div class="col-3">
-                              <img class="ProfileP3" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-
-                            </div>
-                            <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Number: <span class="iNFORStyle2"> <%= item.Employee_number %></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Home Address:<span class="iNFORStyle2"><%= item.Employee_Home_Address %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee Nationality: <span class="iNFORStyle2"><%= item.Employee_Nationality %></span> </p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Email Address: <span class="iNFORStyle2"><%= item.Employee_email_adsress %></span></p>
-                              </div>
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Alternative Contact Details: <span class="iNFORStyle2"><%= item.Epmloyye_Altenative_Contact %> </span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Contact Details: <span class="iNFORStyle2"><%= item.Epmloyye_Contact %> </span> </p>
-                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee ID Number: <span class="iNFORStyle2"><%= item.EpmloyyeID_Number %> </span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Citizenship: <span class="iNFORStyle2"><%= item.Employee_CitizenShip %> </span> </p>
-                            </div>
-                            
-                          </div>
-                        </div>
-
-
-
-                        <div class="border border-dark tab-pane" id="EmploymentInfo_<%= item._id %>" role="tabpanel">
-                          <div class="row">
-                            <div class="col-3">
-                              <img class="ProfileP4" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-
-                            </div>
-                            <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Department:<span class="iNFORStyle2"><%= item.Employee_Department %> <p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Tax Number : <span class="iNFORStyle2"><%= item.Employee_Tax_Number %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee UIF: <span class="iNFORStyle2"><%= item.Epmloyye_UIF %></span> </p>
-                              
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Tax:<span class="iNFORStyle2"><%= item.Epmloyye_TAX %><p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Tax Number : <span class="iNFORStyle2"><%= item.Employee_Tax_Number %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee PAYE:  <span class="iNFORStyle2"><%= item.Epmloyye_PAYE %></span> </p>
-                              
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Tax:<span class="iNFORStyle2"><%= item.Epmloyye_TAX %><p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Tax Number : <span class="iNFORStyle2"><%= item.Employee_Tax_Number %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee SDL:  <span class="iNFORStyle2"><%= item.Epmloyye_SDL %></span> </p>
-                              
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Hourly Rate:<span class="iNFORStyle2"><%= item.Epmloyye_hour_Rate %><p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Basic Salary: <span class="iNFORStyle2"><%= item.Epmloyye_Basic_Salary %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee Final Salary:  <span class="iNFORStyle2"><%= item.Epmloyye_Basic_Final_Salary %></span> </p>
-                              
-                            </div>
-                          </div>
-                        </div>
-
-                          
-   
-             
-                    
-             
-                  
-                        <div class="border border-dark tab-pane" id="Allowance_<%= item._id %>" role="tabpanel">
-                          <div class="row">
-                            <div class="col-3">
-                              <img class="ProfileP5" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-
-                            </div>
-                            <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Allocated Leave Days:<span class="iNFORStyle2"><%= item.Employee_Leave_Days_total %><p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                              <p  class="iNFORStyle">Employee Days Taken: <span class="iNFORStyle2"><%= item.Employee_Leave_Days_Taken %> </span> </p>
-                             </div>
-                             <div class="col-4">
-                              <p class="iNFORStyle">Employee Days Left:  <span class="iNFORStyle2"><%= item.Employee_Leave_Days_left %></span> </p>
-                              
-                            </div>
-                          </div>
-                          
-                  
-                         
-                        </div>
-                        <div class="border border-dark tab-pane" id="Deductions_<%= item._id %>" role="tabpanel">
-                          <div class="row">
-                            <div class="col-3">
-                              <img class="ProfileP6" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-
-                            </div>
-                            <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                          </div>
-                          <div class="row">
-                            <div class="col-4">
-                              <p class="iNFORStyle">Employee Days Left:<span class="iNFORStyle2"> <%= item.Employee_Leave_Days_left %><p class="iNFORStyle"></p></span> </p>
-                            </div>
-                            <div class="col-4">
-                           
-                             </div>
-                             <div class="col-4">
-                              
-                              
-                            </div>
-                          </div>
-                         
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom01">Image link</label>
+                <input type="text" class="form-control" id="validationCustom01" name="Imagelink" placeholder="Paste link" required>
+                <div class="invalid-feedback">
+                  Please Enter a valid Link
                 </div>
               </div>
-              <div class="modal fade" id="editModal<%= item._id %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="editModalLabel">Edit Employee Details</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form action="/edit" method="POST">
-                        <div class="row">
-                          <div class="col-3">
-                            <img class="ProfileP6" data-toggle="modal" data-target="#popup<%= item._id %>" src="<%= item.Employee_Profile_Picture %>" alt="">
-
-                          </div>
-                          <div class="col-9"><h5 class="modal-title" id="popup<%= item._id %>Label" style="text-align: start; padding-top: 10%;"><%= item.EmployeeTitle %> <%= item.Employee_FirstName %> <%= item.Employee_LastName %></h5></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-6">
-                            <p>
-                              Employee Number: <input type="text" name="employeeNumber" value="<%= item.Employee_number %>">
-                            </p>
-                          </div>
-                          <div class="col-6">
-                            <p>
-                              Home Address: <input type="text" name="employeeHomeAddress" value="<%= item.Employee_Home_Address %>">
-                            </p>
-                           </div>
-                           
-                        </div>
-                        <div class="row">
-                          <div class="col-6">
-                            <p>
-                           Email Address: <input type="text" name="Employeeemailadsress" value="<%= item.Employee_email_adsress %>">
-                            </p>
-                          </div>
-                          <div class="col-6">
-                            <p>
-                              Tax Number: <input type="text" name="EmployeeTaxNumber" value="<%= item.Employee_Tax_Number %>">
-                            </p>
-                           </div>
-                        </div>
-
-
-                        <div class="row">
-                          <div class="col-6">
-                            <p>
-                           ID Number: <input type="text" name="EpmloyyeIDNumber" value="<%= item.EpmloyyeID_Number %>">
-                            </p>
-                          </div>
-                          <div class="col-6">
-                            <p>
-                                Contact Details: <input type="text" name="EpmloyyeContact" value="<%= item.Epmloyye_Contact %>">
-                            </p>
-                           </div>
-                        </div>
-
-                        <div class="row">
-                        
-                          <% var hours_worked = 194; %>
-                          <% var Basic_salary = hours_worked * item.Epmloyye_hour_Rate; %>
-                          
-                          <div class="row">
-                            <div class="col-6">
-                              <p>
-                                Basic Salary: <input type="text" id="basic-salary-input" name="EpmloyyeBasicSalary" value="<%= item.Epmloyye_Basic_Salary %>">
-                              </p>
-                            </div>
-                            <div class="col-6">
-                              <p>
-                                Hourly Rate: <span id="hourly-rate-input"><%= item.Epmloyye_hour_Rate %></span>
-                              </p>
-                            </div>
-                          </div>
-                          
-                          <div class="row">
-                            <div class="col-6">
-                              <p>
-                                Hours Worked: <input type="text" id="hours-worked-input" name="hoursWorked" value="<%= item.Hours_worked %>">
-                              </p>
-                            </div>
-                          </div>
-                          
-                        
-                          
-                          <script>
-                         
-                          </script>
-                          
-                          
-                      
-                       
-                      
-                        <input type="hidden" name="id" value="<%= item._id %>">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                          <button type="submit" value="Save" class="btn btn-success">Save changes</button>
-                        </div>
-                        <!-- <input type="submit" value="Save"> -->
-                        
-                      </form>
-                    </div>    
-                  </div>
-                </div>
-              </div>
-            <% }); %>
-          </tbody>
           
-        </table>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomEmail">Email address</label>
+                <input type="email" class="form-control" id="validationCustomEmail" name="Emailaddress" placeholder="you@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+
         
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomContactNumber">Contact Number</label>
+                <input type="number" class="form-control" id="validationCustomContactNumber" name="Contactnumber" placeholder="Contact number" pattern="^(\+27|0)[1-9]\d{8}$" required>
+                <div class="invalid-feedback">
+                  Please enter a valid South African contact number.
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomContactNumber">Alternative Contact Number</label>
+                <input type="number" class="form-control" id="validationCustomContactNumber" placeholder="Alternative contact number" name="alternativecontacts" pattern="^(\+27|0)[1-9]\d{8}$" required>
+                <div class="invalid-feedback">
+                  Please enter a valid South African contact number.
+                </div>
+              </div>
+             
+
+            </div>
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomIDNumber">ID number</label>
+                <input type="number" class="form-control" id="validationCustomIDNumber" placeholder="ID number" name="IDNo" pattern="^\d{13}$" required>
+                <div class="invalid-feedback">
+                  Please enter a valid 13-digit South African ID number.
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomTaxNumber">Tax number</label>
+                <input type="number" class="form-control" id="validationCustomTaxNumber" name="TaxNo" placeholder="Tax number" pattern="^\d{10}$" required>
+                <div class="invalid-feedback">
+                  Please enter a valid 10-digit South African tax number.
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="form-row">
+              
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomNationality">Nationality</label>
+                <input type="text" class="form-control" id="validationCustomNationality" name="Natinality" placeholder="Nationality" pattern="[A-Z]{2}" required>
+                <div class="invalid-feedback">
+                  Please enter a valid nationality code (two uppercase letters).
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomTitle">Home Address</label>
+                <input type="text" class="form-control" id="validationCustomTitle" placeholder="Home Address"  name="Homeaddress" pattern="[a-zA-Z][a-zA-Z '-]*" required>
+                <div class="invalid-feedback">
+                  Please enter a Home Address.
+                </div>
+              </div>
+             
+            </div>
+
+
+
+            <div class="form-row">
+              
+
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomNationality">hourly Rate</label>
+                <input type="number" class="form-control" id="validationCustomNationality" name="Hourrate" placeholder="000" pattern="[A-Z]{2}" required>
+                <div class="invalid-feedback">
+                  Please enyer hourly Rate
+                </div>
+              </div>
+
+
+
+
+
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomNationality">Days Allocated</label>
+                <input type="number" class="form-control" id="validationCustomNationality" name="daysAllocated" placeholder="000" pattern="[A-Z]{2}" required>
+                <div class="invalid-feedback">
+                  Please enyer Days Allocated
+                </div>
+              </div>
+              
+              
+              
+            </div>
+            
+
+            <div class="form-row">
+             
+              
+
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomTitle">Job Title</label>
+                <input type="text" class="form-control" id="validationCustomTitle" name="JobTitle" placeholder="Job Title" pattern="[a-zA-Z][a-zA-Z '-]*" required>
+                <div class="invalid-feedback">
+                  Please enter a Job Title.
+                </div>
+              </div>
+
+
+
+
+              
+
+                
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomTitle">Department</label>
+                <input type="text" class="form-control" id="validationCustomTitle" name="Departmentbody" placeholder="Department" pattern="[a-zA-Z][a-zA-Z '-]*" required>
+                <div class="invalid-feedback">
+                  Please enter a Department.
+                </div>
+              </div>
+ 
+            </div>
+
+
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                  Confirm All information provided is valid
+                </label>
+                <div class="invalid-feedback">
+                  You must Confirm before submitting.
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit form</button>
+          </form>
+          
+          <script>
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                  if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  form.classList.add('was-validated');
+                }, false);
+              });
+            }, false);
+          })();
+          </script>
+
+
+
+        </section>
+ 
         <!-- Modal dialog -->
         <script src="/js/script.js"></script>
          </body>
