@@ -522,8 +522,7 @@ app.post('/EmployeeInfoUpdate', (req, res) => {
   const hourswoked = req.body.hoursWorked;
   const hourate = req.body.EpmloyyehourRate;
  
-  const employeeHomeAddress = req.body.employeeHomeAddress;
-  const employeeEmailAddress = req.body.Employeeemailadsress;
+ 
   // console.log("tax amount is " + salaryAfterTaxQuery + employeeBasicSalaryQeury )
 
   Payrollsmodel.findOneAndUpdate(
@@ -541,9 +540,7 @@ app.post('/EmployeeInfoUpdate', (req, res) => {
       Employee_Allowance:AllowanceQuery,
       Hours_worked:hourswoked,
       Epmloyye_hour_Rate: hourate,
-    
-      Employee_Home_Address: employeeHomeAddress,
-      Employee_email_adsress: employeeEmailAddress
+
       
     },
     (err, employee) => {
