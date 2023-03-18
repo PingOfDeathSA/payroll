@@ -522,6 +522,128 @@ app.post('/leavedays', (req, res) => {
   );
 });
 
+//Saving monthly payrolls
+const payrollSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+    required: true
+  },
+  Employeenumber: { type: [String ]||[Number], required: true },
+  EmployeeLastName: { type: [String ]||[Number], required: true },
+  EmployeeFirstName: { type: [String ]||[Number], required: true },
+  Position: { type: [String ]||[Number], required: true },
+  EmployeeDepartment: { type: [String ]||[Number], required: true },
+  EpmloyeeBasicSalary: { type: [String ]||[Number], required: true },
+  Hoursworked: { type: [String ]||[Number], required: true },
+  EmployeeAllowance: { type:[String ]||[Number], required: true },
+  MedicalAid: { type:[String ]||[Number], required: true },
+  EpmloyyeTax: { type: [String ]||[Number], required: true },
+  EpmloyyeUIF: { type: [String ]||[Number], required: true },
+  EpmloyyeFines: { type: [String ]||[Number], required: true },
+  Epmloyee_BasicFinalSalary: { type: [String ]||[Number], required: true },
+  EmployeeHoursRate:{ type: [String ]||[Number], required: true },
+  EpmloyyeTotal: { type: String, required: true },
+
+  }
+);
+
+const PayrollModelRollouts = mongoose.model('Payrollrollout', payrollSchema);
+app.post('/commits', (req, res) => {
+  const DateQuery = req.body.checkedDate;
+  const EmNoQuery = req.body.EmNo;
+  const FNQuery = req.body.FN;
+  const LNQuery = req.body.LN;
+  const PSQuery = req.body.PS;
+  const EDQuery = req.body.ED;
+  const EBSQuery = req.body.EBS;
+  const EHRQuery = req.body.EHR;
+  const HWQuery = req.body.HW;
+  const EAQuery = req.body.EA;
+  const MAQuery = req.body.MA;
+  const ETQuery = req.body.ET;
+  const EUQuery = req.body.EU;
+  const EFQuery = req.body.ET;
+  const EFBSQuery = req.body.EFBS;
+  const totalSQuery = req.body.totalS;
+
+  console.log('EmailQuery:',DateQuery);
+  console.log('EmNoQuery:',EmNoQuery);
+  console.log('FNQuery:',FNQuery);
+  console.log('LNQuery:',LNQuery);
+  console.log('PSQuery:',PSQuery);
+  console.log('EDQuery:',EDQuery);
+  console.log('EBSQuery:',EBSQuery);
+  console.log('EBSQuery:',EHRQuery);
+  console.log('HWQuery:',HWQuery);
+  console.log('EAQuery:',EAQuery);
+  console.log('MAQuery:',MAQuery);
+  console.log('ETQuery:',ETQuery);
+  console.log('EUQuery:',EUQuery);
+  console.log('EFQuery:',EFQuery);
+  console.log('EFBSQuery:',EFBSQuery);
+  console.log( typeof'totalSQuery:',totalSQuery);
+
+  const PayrollSaveRollouts = new PayrollModelRollouts(
+    {
+      date : DateQuery,
+      Employeenumber: EmNoQuery,
+      EmployeeLastName: FNQuery,
+      EmployeeFirstName: LNQuery,
+      Position : PSQuery,
+      EmployeeDepartment: EDQuery,
+      EpmloyeeBasicSalary:EBSQuery,
+      EmployeeHoursRate:EHRQuery,
+      Hoursworked: HWQuery,
+      EmployeeAllowance:EAQuery,
+      MedicalAid:MAQuery,
+      EpmloyyeTax: ETQuery,
+      EpmloyyeUIF:EUQuery,
+      EpmloyyeFines: EFQuery,
+      Epmloyee_BasicFinalSalary:EFBSQuery,
+      EpmloyyeTotal: totalSQuery,  
+    }); 
+  // const payrollsave = new PayrollModel(payrollrollouts);
+  PayrollSaveRollouts.save().then(() => res.redirect("/Payroll.html")).catch(err => {
+     console.error(err);
+     res.status(500).send(`
+     <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+       <strong>Error:</strong> ${err}
+     </div>
+   `);
+   });
+});
+
+// getting previous payroll commits from database'
+app.get('/PayrollCommits.html', (req, res) => {
+  PayrollModelRollouts.find(
+    { },
+    function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err) 
+    } else {
+      //  console.log(EmployeeDetails)
+    }
+    res.render("payrollcommits", {listTitle: "Today", Learn: EmployeeDetails,
+    
+  
+  });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post('/EmployeeInfoUpdate', (req, res) => {
 
@@ -722,6 +844,37 @@ app.post('/searchpaLeave', (req, res) => {
 });
 
 
+app.post('/searchPayrollRolloutsByDate', (req, res) => {
+  const searchQuery = req.body.searchDate;
+  const alldatesQuery = req.body.alldates;
+
+  if (alldatesQuery === 'on') {
+    PayrollModelRollouts.find({}, function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred while searching.");
+      } else {
+        res.render("payrollcommits", { listTitle: "All Dates", Learn: EmployeeDetails });
+      }
+    });
+  } else if (searchQuery) {
+    PayrollModelRollouts.find({ date: searchQuery }, function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred while searching.");
+      } else {
+        res.render("payrollcommits", { listTitle: "Today", Learn: EmployeeDetails });
+      }
+    });
+  } else {
+    res.redirect('/PayrollCommits.html');
+  }
+});
+
+
+
+
+
 
 
 
@@ -762,313 +915,6 @@ app.post('/searchpaLeave', (req, res) => {
 //       // learnerSave.save().then(() => console.log('Learner added'));
 //   }
 // });
-
-
-
-
-
-// // Model query for teacher prolile
-
-
-
-// let Teacher_subjects;
-
-// Grade_Propertiesmodel.find(function (err, Teachers) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     Teachers.forEach(function (Teacher) {
-//       Teacher_subjects = Teacher.Subject;
-//        console.log(Teacher_subjects);
-//     });
-//     // Here you can use the current_learner variable
-//     // console.log("Current learner is: " + current_learner_Student);
-//   }
-// });
-
-
-// let Teacher_Grade;
-// Grade_Propertiesmodel.find(function (err, Teachers) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     Teachers.forEach(function (Teacher) {
-//       Teacher_Grade = Teacher.grade_number;
-//        console.log(Teacher_Grade);
-//     });
-//     // Here you can use the current_learner variable
-//     // console.log("Current learner is: " + current_learner_Student);
-//   }
-// });
-
-// // app.get('/', (req, res) => {
-// //   // res.sendfile('Mylearners.html'); 
-
-// //   Grade_Propertiesmodel.find(
-    
-// //     { grade_number: ["9C","9F"] },
-    
-// //     function (err, leanerDetails) {
-
-// //     if (err) {
-// //       console.log(err)
-      
-// //     } else { console.log(leanerDetails)}
-
-// //     res.render("list", {listTitle: "Today", Learn: leanerDetails});
-
-
-// //   });
-  
-// // })
-
-
-// app.get('/', (req, res) => {
-//   // res.sendfile('Mylearners.html'); 
-
-//   Learnermodel.find(
-    
-//     { grade_number: ["9C","9F"] },
-    
-//     function (err, leanerDetails) {
-
-//     if (err) {
-//       console.log(err)
-      
-//     } else { console.log(leanerDetails)}
-
-//     res.render("list", {listTitle: "Today", Learn: leanerDetails});
-
-
-//   });
-  
-// })
-// // leaners stats model count
-// app.get('/', (req, res) => {
-//   // res.sendfile('Mylearners.html'); 
-
-//   Learnermodel.find(
-    
-//     { grade_number: ["9C","9F"] },
-    
-//     function (err, leanerDetails) {
-
-//     if (err) {
-//       console.log(err)
-      
-//     } else { console.log(leanerDetails)}
-
-//     res.render("list", {listTitle: "Today", Learn: leanerDetails});
-
-
-//   });
-  
-// })
-
-
-
-// // Model query for Leaners all
-// // querying leaner by grade
-// app.get('/Mylearners.html', (req, res) => {
-//   // res.sendfile('Mylearners.html'); 
-
-//   Learnermodel.find(
-    
-//     { grade_number: ["9C","9F"] },
-    
-//     function (err, leanerDetails) {
-
-//     if (err) {
-//       console.log(err)
-      
-//     } else { console.log(leanerDetails)}
-
-//     res.render("learners", {listTitle: "Today", Learn: leanerDetails});
-   
-
-//   });
-
-  
-// });
-
-// // counting the numberr of learners
-
-// app.get('/students', function(req, res) {
-//   Learnermodel.find({}, function(err, students) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.render('students', { students: students });
-//     }
-//   });
-// });
-
-
-
-// // querying leaner by grade
-
-
-
-// // querying Garde Proparties by informtion
-
-// app.get("/", function(req, res) {
-  
-  
-//     Learnermodel.find(
-      
-//       { grade_number: ["9C","9F"] },
-      
-//       function (err, leanerDetails) {
-  
-//       if (err) {
-//         console.log(err)
-        
-//       } else { console.log(leanerDetails)}
-  
-//       res.render("list", {listTitle: "Today", Learn: leanerDetails});
-  
-  
-//     })
-//   // const day = date.getDate();
-  
-  
-//   });
-  
-
-
-
-// // adding new leaner
-// app.post("/", function(req, res){
-
-//   const   Fist_Name1 = req.body.newItem;
-//   const learnerSave = new Learnermodel(
-//     {
-      
-//       // LearnerT: learnerTeacher,
-//       Gender:"F",
-    
-//       Leaner_Profile_Picture:"https://images.pexels.com/photos/7275385/pexels-photo-7275385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-//       address:"Jane Furse",
-      
-//       email_adsress:
-//       "Goad-C@school.co.za",
-      
-//       grade_number:
-//       "9F",
-//       Fist_Name: Fist_Name1,
-//       Last_Name: "Phahlamohlaka",
-//       Student_Number:currentSN
-    
-    
-//     });
-
-// //  learnerSave.save().then(() => res.redirect("/Mylearners.html"));
-
-// });
-// // deleting leaner
-// app.post("/delete", function (req, res) {
-//   const checkedid = req.body.checkbox;
-//   Learnermodel.findByIdAndRemove(checkedid, function (err, docs) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("Removed User : ", docs);
-//       res.redirect("/Mylearners.html");
-//     }
-//   });
-// });
-//  const main = "Ronald438";
-//  const main2 = "PingOfDeathSA";
-
-// // app.get("/work", function(req,res){
-// //   res.render("list", {listTitle: "Work List", newListItems: workItems});
-// // });
-
-// // database validation
-// app.listen(5000, function() {
-
-    
-  
-//   console.log("Server started on port 5000");
-  
-  
-// });
-// // Learnermodel.find(
-  
-// //   function (err, learners) {
-// //   if (err) {
-// //       console.log(err);
-// //   } else {
-// //     learners.forEach(function (learner) {
-// //         var Curren_leaner = learner.Student_Number 
-// //       console.log(
-// //           learner.Student_Number 
-// //             );
-           
-  
-// // });
-// //   }
-// // });
-
-
-
-
-// // validator
-// // let current_learner_Student;
-
-// // Learnermodel.find(function (err, learners) {
-// //   if (err) {
-// //     console.log(err);
-// //   } else {
-// //     learners.forEach(function (learner) {
-// //       current_learner_Student = learner.Student_Number;
-// //       // console.log(current_learner_Student);
-// //     });
-// //     // Here you can use the current_learner variable
-// //     // console.log("Current learner is: " + current_learner_Student);
-// //   }
-// // });
-// // const fist_Name_VALIDATOR = "Sammy";
-// // const last_Name_VALIDATOR = "Phahlamohlaka";
-// // const STN_validator = current_learner_Student
-
-
-
-
-
-
-
-
-// // Learnermodel.find({ Last_Name: last_Name_VALIDATOR },{ Fist_Name: fist_Name_VALIDATOR },{ Student_Number: STN_validator }, function (err, learners) {
-// //   if (learners.some((learner) => learner.Last_Name === last_Name_VALIDATOR) || learners.some((learner) => learner.Fist_Name === fist_Name_VALIDATOR) && learners.some((learner) => learner.Student_Number === STN_validator)) {
-// //     console.log("Learner already exists");
-// //   } else {
-// //     //  console.log("Learner already add");
-// //       // learnerSave.save().then(() => console.log('Learner added'));
-// //   }
-// // });
-
-
-
-
-
-
-// // Deleting 
-// // Learnermodel.deleteOne(
-// //     { _id: "63eca4d68cb526dee3dle"}, {Gender: "M"},   
-// //      function (err) {
-// //              if (err) {console.log(err) 
-// //             } else {
-// //                 console.log("Delete is Succesful")
-        
-// //              }
-            
-// //             }
-// //    )
-// //  Grade_PropertiesSave.save().then(() => console.log('Grade_Properties added'));
-
-//   //  learnerSave.save().then(() => console.log('Learner added'));
-
 
 
 

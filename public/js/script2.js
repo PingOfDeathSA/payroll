@@ -38,3 +38,7 @@ function downloadExcel() {
   document.body.appendChild(downloadLink);
   downloadLink.click();
 }
+
+$(document).ready(function() {
+  $('.employee-no-input').prop('disabled', true);
+});

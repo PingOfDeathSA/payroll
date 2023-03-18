@@ -95,15 +95,22 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="/Payroll.html">
+              <a class="nav-link" href="/Payroll.html">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
-               Payroll
+               Payroll Admin
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/LeavedaysAdmin.html">
                 <span data-feather="users" class="align-text-bottom"></span>
                Leave Days Admin
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/PayrollCommits.html">
+                <span data-feather="users" class="align-text-bottom"></span>
+               Payroll Commits
               </a>
             </li>
           </ul>
@@ -213,7 +220,7 @@
             <div class="form-row">
               <div class="col-md-4 mb-3">
                 <label for="validationCustomIDNumber">ID number</label>
-                <input type="number" class="form-control" id="validationCustomIDNumber" placeholder="ID number" name="IDNo" pattern="^\d{13}$" required>
+                <input type="number" class="form-control" id="validationCustomIDNumber" min="0"  max="13" placeholder="ID number" name="IDNo" pattern="^\d{13}$" required>
                 <div class="invalid-feedback">
                   Please enter a valid 13-digit South African ID number.
                 </div>

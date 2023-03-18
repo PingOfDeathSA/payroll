@@ -98,13 +98,20 @@
             <li class="nav-item">
               <a class="nav-link active" href="/Payroll.html">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
-               Payroll
+               Payroll Admin
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/LeavedaysAdmin.html">
                 <span data-feather="users" class="align-text-bottom"></span>
                Leave Days Admin
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/PayrollCommits.html">
+                <span data-feather="users" class="align-text-bottom"></span>
+               Payroll Commits
               </a>
             </li>
           </ul>
@@ -152,7 +159,7 @@
           
           </div>
           
-          
+        
         </div>
         <div class="DownloadCSV">
           <a href="#" onclick="downloadExcel()"> <button type="button" class="btn btn-success" >Download Excel</button></button></a>
@@ -160,71 +167,146 @@
           
          </div>
         
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Employee No</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Position</th>
-              <th scope="col">Department</th>
-              <th scope="col">Basic Salary</th>
-              <th scope="col">Hourly Rate</th>
-              <th style="width: 11%;" scope="col">Hours Worked</th>
-              <th scope="col">Allowance</th>
-              <th scope="col">Medical aid</th>
-            
-              <th scope="col">PAYE</th>
-              <th scope="col">UIF</th>
-              <th scope="col">Fines</th>
-              <th scope="col">Final Salary</th>
-             
-            </tr>
-          </thead>
-          <tbody>
-            <% Learn.forEach(function(item) { %>
-              <tr>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_number %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_FirstName %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_LastName %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Postion %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Employee_Department %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyee_Basic_Salary %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_hour_Rate %></td>
-                <td class="table-text"  style="vertical-align: middle;"><%= item.Hours_worked %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Employee_Allowance %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Medical_Aid %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_TAX %></td>
-                <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyye_UIF %></td>
-                <td class="table-text" style="vertical-align: middle;">R <%= item.Epmloyye_Fines %></td>
-              <td class="table-text"  style="vertical-align: middle;">R <%= item.Epmloyee_Basic_Final_Salary %></td>
+
+
+          <form class="form-inline" action="/commits" method="post">
+
+
+
+            <div class="form-group mb-2">
+              <label for="datePicker" class="sr-only"> Date</label>
+              <input type="date" class="form-control" name="checkedDate" id="datePicker">
+          </div>
           
+          <script>
+              const datePicker = document.getElementById("datePicker");
+              datePicker.addEventListener("change", (event) => {
+                  console.log(event.target.value); // or do whatever you want with the selected date
+              });
+          </script>
+          
+           
+            
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Employee No</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Position</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Basic Salary</th>
+                  <th scope="col">Hourly Rate</th>
+                  <th style="width: 11%;" scope="col">Hours Worked</th>
+                  <th scope="col">Allowance</th>
+                  <th scope="col">Medical aid</th>
                 
-              <% }); %>
-              
-              
-          </tbody>
-          <script src="/js/script2.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-
-        </table>
-        
-
-
+                  <th scope="col">PAYE</th>
+                  <th scope="col">UIF</th>
+                  <th scope="col">Fines</th>
+                  <th scope="col">Final Salary</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <% Learn.forEach(function(item) { %>
+                  <tr>
+                    <td class="table-text" name="EmNo" style="vertical-align: middle;">
+                      <input class="form-control bg-dark" type="text" name="EmNo" value="<%= item.Employee_number %>" style="width: 100px; border: none; outline: none; color:rgb(255, 255, 255)" readonly>
+                    </td>
+                    <td class="table-text" name="FN" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="FN" value="<%= item.Employee_FirstName %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="LN" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="LN" value="<%= item.Employee_LastName %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="PS" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="PS" value="<%= item.Postion %>" style="width: 130px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="ED" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="ED" value="<%= item.Employee_Department %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="EBS" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EBS" value="<%= item.Epmloyee_Basic_Salary %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="EHR" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EHR" value="<%= item.Epmloyye_hour_Rate %>" style="width: 50px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="HW" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="HW" value="<%= item.Hours_worked %>" style="width: 50px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="EA" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EA" value="<%= item.Employee_Allowance %>" style="width: 80px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="MA" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="MA" value="<%= item.Medical_Aid %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name="ET" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="ET" value="<%= item.Epmloyye_TAX %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name=" EU" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EU" value="<%= item.Epmloyye_UIF %>" style="width: 100px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
+                    <td class="table-text" name=" EF" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EF" value="<%= item.Epmloyye_Fines %>" style="width: 80px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>  
+                    <td class="table-text" name="EFBS" style="vertical-align: middle;">
+                      <input class="form-control bg-light" type="text" name="EFBS" value="R <%= item.Epmloyee_Basic_Final_Salary %>" style="width: 120px; border: none; outline: none; color:rgb(0, 0, 0)" readonly>
+                    </td>
     
-        
-        <div class="text-right">
-          <button type="button" class="btn btn-danger" style="float: right;">
-            <% var totalSalary = 0;
-               Learn.forEach(function(item) {
-                 var salary = parseInt(item.Epmloyee_Basic_Final_Salary);
-                 totalSalary += salary;
-               });
-            %>
-            <h5>Total:R <%= totalSalary.toFixed(2) %></h5>
-          </button>
-        </div>
+              
+                    
+                  <% }); %>
+                  
+                  
+              </tbody>
+              <script src="/js/script2.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+            </table>
+            
+    
+            <div class="row">
+              <div class="col-4"><button type="submit" class="btn btn-success mb-2" style="float: left;"><h5>Save</h5></button></div>
+              <div class="col-8">  <div class="text-right">
+                <button class="btn btn-danger" style="vertical-align: middle;">
+                  <input class="form-control bg-light" type="text" name="totalS" value="<%= (() => {
+                      let totalSalary = 0;
+                      Learn.forEach(item => {
+                          let salary = parseInt(item.Epmloyee_Basic_Final_Salary);
+                          totalSalary += salary;
+                      });
+                      return 'R ' + totalSalary.toFixed(2); // Concatenate 'R' to the result
+                  })() %>" style="width: 150px; border: none; outline: none; color: rgb(0, 0, 0)" readonly>
+              </button>
+              
+                <!-- <button type="button" class="btn btn-danger" name="TotalSalary" style="float: right;">
+                  <% var totalSalary = 0;
+                     Learn.forEach(function(item) {
+                       var salary = parseInt(item.Epmloyee_Basic_Final_Salary);
+                       totalSalary += salary;
+                     });
+                  %>
+                  <h5 name="totalS">Total:R <%= totalSalary.toFixed(2) %></h5>
+                </button> -->
+              </div></div>
+            </div>
+            
+    
+            
+          
+
+            
+          </form>
+
+
+
+
+
+
+  
+
         
         <div class="row">
           
