@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const encrypt= require("mongoose-encryption");
 // const date = require(__dirname + "/date.js");
 mongoose.set('strictQuery', true);
 const app = express();
@@ -13,6 +14,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
 mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/PayrolllDB');
+
+
+const userschema= new mongoose.Schema({
+  email: String,
+  password: String,
+
+});
 
 // console.log(currentSN);
 
@@ -178,6 +186,8 @@ Medical_Aid:{
   // required: [true, " Check Employee Days left"]
 },
 });
+
+
 const Payrollsmodel = mongoose.model("Payroll_ProCollection", PayrollSchema);
 // Loading Employye data
 
@@ -760,7 +770,7 @@ app.post("/Addnewemployee", function(req, res){
 
 
 //Geeting data from DB to Front End to mian page
-app.get('/', (req, res) => {
+app.get('/dashbord.html', (req, res) => {
   Payrollsmodel.find(
     { },
     function (err, EmployeeDetails) {
@@ -918,3 +928,78 @@ app.post('/searchPayrollRolloutsByDate', (req, res) => {
 
 
 
+//user authen
+const secret = "thisisourlittlesecret.";
+userschema.plugin(//encrypt plugin package
+   encrypt, {secret:secret, encryptedFields: ['password'] });
+const UserModel = new mongoose.model("User", userschema);
+const UserSave = new UserModel({
+email: "Ronald@gmail.com",
+password: "dhidghgvilh",
+
+});
+// UserSave.save().then(() => console.log('User added'));
+
+// app.get("/",function(req, res){
+//   res.render("home");
+// });
+
+app.get("/",function(req, res){
+  res.render("login");
+});
+app.post("/login",function(req, res){
+  const username = req.body.username;
+  const password = req.body.password;
+  UserModel.findOne(
+    { email: username },
+    
+    function (err, foundUser) {
+      if (err) {
+        console.log(err);
+      } else {
+
+        if (foundUser) {
+          if (foundUser.password === password) {
+        
+            Payrollsmodel.find(
+              { },
+              function (err, EmployeeDetails) {
+              if (err) {
+                console.log(err) 
+              } else { 
+                // console.log(EmployeeDetails)
+              }
+              res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
+              });
+            });
+          }
+
+        }
+
+      }
+    }
+  );
+ 
+  // UserSave.save().then(() => console.log('User added'));
+});
+app.get("/register",function(req, res){
+  res.render("register");
+});
+app.post("/register",function(req, res){
+  const newUser = new UserModel  ({
+    email: req.body.username,
+    password: req.body.password,
+  });
+newUser.save(function (err) {
+  if (err){
+    console.log(err);
+
+  }else{
+    res.render("secrets")
+  }
+  
+})
+
+// UserSave.save().then(() => console.log('User added'));
+
+});
