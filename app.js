@@ -947,7 +947,7 @@ password: "dhidghgvilh",
 app.get("/",function(req, res){
   res.render("login");
 });
-app.post("/login",function(req, res){
+app.post("/login", function(req, res){
   const username = req.body.username;
   const password = req.body.password;
   UserModel.findOne(
@@ -964,26 +964,28 @@ app.post("/login",function(req, res){
             Payrollsmodel.find(
               { },
               function (err, EmployeeDetails) {
-              if (err) {
-                console.log(err) 
-              } else { 
-                // console.log(EmployeeDetails)
+                if (err) {
+                  console.log(err) 
+                } else { 
+                  // console.log(EmployeeDetails)
+                }
+                res.render("list", {
+                  listTitle: "Today",
+                  Learn: EmployeeDetails
+                });
               }
-              res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
-              });
-            });
-          } 
-
-        }else {
+            );
+          } else {
+            res.render("errorlogin");
+          }
+        } else {
           res.render("errorlogin");
         }
-
       }
     }
   );
- 
- 
 });
+
 app.get("/register",function(req, res){
   res.render("register");
 });
