@@ -946,18 +946,11 @@ app.post('/searchPayrollRolloutsByDate', (req, res) => {
 
 
 //user authen
-const secret = "thisisourlittlesecret.";
-
-
-
 const UserModel = mongoose.model("User", userschema);
-
 
 const UserSave = new UserModel({
   email: "SYGE@gmail.com",
   password: "Payrolltest@sageDEVS"
-
-
 });
 
 // bcrypt.hash(UserSave.password, saltRounds, function(err, hash) {
@@ -974,7 +967,6 @@ const UserSave = new UserModel({
 //     });
 //   }
 // });
-
 UserModel.find(
   {email:"SYGE@gmail.com"},
   function (err, userlogindetails) {
@@ -983,9 +975,7 @@ UserModel.find(
   } else { 
      console.log(userlogindetails)
   }
- 
 });
-
 app.get("/",function(req, res){
   res.render("login");
 });
@@ -1034,20 +1024,25 @@ app.get("/register",function(req, res){
   res.render("register");
 });
 app.post("/register",function(req, res){
-  const newUser = new UserModel  ({
-    email: req.body.username,
-    password: req.body.password,
-  });
-newUser.save(function (err) {
-  if (err){
-    console.log(err);
 
-  }else{
-    res.render("secrets")
-  }
-  
-})
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+        // Store hash in your password DB.
+        const newUser = new UserModel  ({
+          email: req.body.username,
+          password: hash,
+        });
+      newUser.save(function (err) {
+        if (err){
+          console.log(err);
+        }else{
+          res.render("secrets")
+        }
+      })
+      
+      // UserSave.save().then(() => console.log('User added'));
+    });
+});
 
-// UserSave.save().then(() => console.log('User added'));
 
 });
