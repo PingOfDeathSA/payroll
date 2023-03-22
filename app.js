@@ -4,6 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const encrypt= require("mongoose-encryption");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 // const date = require(__dirname + "/date.js");
 mongoose.set('strictQuery', true);
 const app = express();
@@ -945,19 +947,44 @@ app.post('/searchPayrollRolloutsByDate', (req, res) => {
 
 //user authen
 const secret = "thisisourlittlesecret.";
-userschema.plugin(//encrypt plugin package
-   encrypt, {secret:secret, encryptedFields: ['password'] });
-const UserModel = new mongoose.model("User", userschema);
+
+
+
+const UserModel = mongoose.model("User", userschema);
+
+
 const UserSave = new UserModel({
-email: "SYGE@gmail.com",
-password: "Payrolltest@sageDEVS",
+  email: "SYGE@gmail.com",
+  password: "Payrolltest@sageDEVS"
+
 
 });
- //UserSave.save().then(() => console.log('User added'));
 
-// app.get("/",function(req, res){
-//   res.render("home");
+// bcrypt.hash(UserSave.password, saltRounds, function(err, hash) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     UserSave.password = hash;
+//     UserSave.save(function(err) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log("User saved successfully.");
+//       }
+//     });
+//   }
 // });
+
+UserModel.find(
+  {email:"SYGE@gmail.com"},
+  function (err, userlogindetails) {
+  if (err) {
+    console.log(err)
+  } else { 
+     console.log(userlogindetails)
+  }
+ 
+});
 
 app.get("/",function(req, res){
   res.render("login");
@@ -965,34 +992,32 @@ app.get("/",function(req, res){
 app.post("/login", function(req, res){
   const username = req.body.username;
   const password = req.body.password;
+
   UserModel.findOne(
     { email: username },
-    
     function (err, foundUser) {
       if (err) {
         console.log(err);
       } else {
-
         if (foundUser) {
-          if (foundUser.password === password) {
-        
-            Payrollsmodel.find(
-              { },
-              function (err, EmployeeDetails) {
+          bcrypt.compare(password, foundUser.password, function(err, result) {
+            if (err) {
+              console.log(err);
+            } else if (result === true) {
+              Payrollsmodel.find({}, function (err, EmployeeDetails) {
                 if (err) {
-                  console.log(err) 
+                  console.log(err);
                 } else { 
-                  // console.log(EmployeeDetails)
+                  res.render("list", {
+                    listTitle: "Today",
+                    Learn: EmployeeDetails
+                  });
                 }
-                res.render("list", {
-                  listTitle: "Today",
-                  Learn: EmployeeDetails
-                });
-              }
-            );
-          } else {
-            res.render("errorlogin");
-          }
+              });
+            } else {
+              res.render("errorlogin");
+            }
+          });
         } else {
           res.render("errorlogin");
         }
@@ -1000,6 +1025,10 @@ app.post("/login", function(req, res){
     }
   );
 });
+
+
+
+
 
 app.get("/register",function(req, res){
   res.render("register");
