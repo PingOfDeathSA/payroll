@@ -348,25 +348,36 @@ app.get('/LeavedaysAdmin.html', (req, res) => {
 
 //Edit data from fornt end
 app.post('/EmployementInfoUpdate', (req, res) => {
-
   function calculateTax(income) {
     var tax = 0;
     var taxPercentage = 0;
   
-    if (income > 782200) {
-      tax = (income - 782200) * 0.39 + 209032;
+    if (income > 857900 && income <=  1817000) {
+     tax = (income - 35854.20 - 251258) * 0.41;
+      taxPercentage = 41;
+    }
+     else if (income > 1817000) {
+     tax = (income - -221386 - 644489) * 0.45;
+      taxPercentage = 45;
+    }
+     else if (income > 673000 && income <=  857900) {
+     tax = (income - 78694.03 - 179147) * 0.39;
       taxPercentage = 39;
-    } else if (income > 613600) {
-      tax = (income - 613600) * 0.36 + 149475;
+    }
+     else if (income > 512800 && income <= 673000) {
+     tax = (income - 101769.45 - 121475) * 0.36;
       taxPercentage = 36;
-    } else if (income > 467500) {
-      tax = (income - 467500) * 0.31 + 97225;
-      taxPercentage = 31;
-    } else if (income > 337800) {
-      tax = (income - 337800) * 0.26 + 61910;
+    }
+    else if (income > 370500 && income <= 512800) {
+     tax = (income - 99180 - 77362) * 0.31;
+      taxPercentage = 36;
+    }
+    else if (income > 237100 && income <= 370500) {
+     tax = (income - 96565 - 42678) * 0.26;
       taxPercentage = 26;
-    } else if (income > 216200) {
-      tax = (income - 216200) * 0.18 + 33210;
+    }
+    else if (income > 95750 && income <= 237100) {
+      tax = (income-95750) * 0.18;
       taxPercentage = 18;
     }
     return {
@@ -376,7 +387,11 @@ app.post('/EmployementInfoUpdate', (req, res) => {
   }
 const employeeBasicSalaryQeury = req.body.EmployeeBasicSalary;
 
+console.log("testing amount: ", employeeBasicSalaryQeury )
+
 var YearIncome = employeeBasicSalaryQeury * 12;
+
+console.log("year income:", YearIncome)
   var DeductiontTax = calculateTax(YearIncome);
 const { taxAmount, taxPercentage } = calculateTax(YearIncome);
 var monthlyTax = taxAmount / 12;
@@ -495,7 +510,7 @@ console.log("Allowance is " + finalsalaryadding_allowance )
         console.log(err);
         res.redirect('/error');
       } else {
-        res.redirect('/');
+        res.redirect('/dashboard.html');
       }
     }
   );
@@ -526,7 +541,7 @@ app.post('/leavedays', (req, res) => {
         console.log(err);
         res.redirect('/error');
       } else {
-        res.redirect('/');
+        res.redirect('/list');
       }
     }
   );
@@ -696,7 +711,7 @@ app.post('/EmployeeInfoUpdate', (req, res) => {
         console.log(err);
         res.redirect('/error');
       } else {
-        res.redirect('/');
+        res.redirect('/dashboard.html');
       }
     }
   );
@@ -770,7 +785,7 @@ app.post("/Addnewemployee", function(req, res){
 
 
 //Geeting data from DB to Front End to mian page
-app.get('/dashbord.html', (req, res) => {
+app.get('/dashboard.html', (req, res) => {
   Payrollsmodel.find(
     { },
     function (err, EmployeeDetails) {
@@ -934,11 +949,11 @@ userschema.plugin(//encrypt plugin package
    encrypt, {secret:secret, encryptedFields: ['password'] });
 const UserModel = new mongoose.model("User", userschema);
 const UserSave = new UserModel({
-email: "Ronald@gmail.com",
-password: "dhidghgvilh",
+email: "SYGE@gmail.com",
+password: "Payrolltest@sageDEVS",
 
 });
-// UserSave.save().then(() => console.log('User added'));
+ //UserSave.save().then(() => console.log('User added'));
 
 // app.get("/",function(req, res){
 //   res.render("home");
