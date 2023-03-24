@@ -720,36 +720,43 @@ app.post('/EmployeeInfoUpdate', (req, res) => {
 });
 
 app.post("/Addnewemployee", function(req, res){
-      const  Fist_NameQuery = req.body.FirstName;
-      const  LastNamneQuery = req.body.LastName;
-      const  ImagelinkQuery = req.body.Imagelink;
-      const  EmailaddressQuery = req.body.Emailaddress;
-      const ContactNumberQuery = req.body.Contactnumber;
-      const AternatviContactsQuery = req.body.alternativecontacts;
-      const IDNoQuery = req.body.IDNo;
-      const TAXQuery = req.body.TaxNo;
-      const NatinalityQuery = req.body.Natinality;
-      const TitleQuery = req.body.Title;
-      const HomeaddressQuery = req.body.Homeaddress;
-      const HourrateQuery = req.body.Hourrate;
-      const JobTitleQuery = req.body.JobTitle;
-      const DepartmentbodyQuery = req.body.Departmentbody;
-      const DaysallowqueryQuery = req.body.daysAllocated;
-      console.log(Fist_NameQuery)
-      console.log(LastNamneQuery)
-      console.log(ImagelinkQuery)
-      console.log(EmailaddressQuery)
-      console.log(ContactNumberQuery)
-      console.log(AternatviContactsQuery)
-      console.log(IDNoQuery)
-      console.log(TAXQuery)
-      console.log(NatinalityQuery)
-      console.log(TitleQuery)
-      console.log(HomeaddressQuery)
-      console.log(HourrateQuery)
-      console.log(JobTitleQuery)
-      console.log(DepartmentbodyQuery)
-      console.log(DaysallowqueryQuery)
+  const  Fist_NameQuery = req.body.FirstName;
+  const  LastNamneQuery = req.body.LastName;
+  const  ImagelinkQuery = req.body.Imagelink;
+  const  EmailaddressQuery = req.body.Emailaddress;
+  const ContactNumberQuery = req.body.Contactnumber;
+  const AternatviContactsQuery = req.body.alternativecontacts;
+  const IDNoQuery = req.body.IDNo;
+  const TAXQuery = req.body.TaxNo;
+  const NatinalityQuery = req.body.Natinality;
+  const TitleQuery = req.body.Title;
+  const HomeaddressQuery = req.body.Homeaddress;
+  const HourrateQuery = req.body.Hourrate;
+  const JobTitleQuery = req.body.JobTitle;
+  const DepartmentbodyQuery = req.body.Departmentbody;
+  const DaysallowqueryQuery = req.body.daysAllocated;
+  
+  // Validate the form input data before saving
+  if (!Fist_NameQuery || !LastNamneQuery || !EmailaddressQuery || !ContactNumberQuery) {
+      return res.status(400).send("Please fill in all required fields");
+  }
+
+  console.log(Fist_NameQuery);
+  console.log(LastNamneQuery);
+  console.log(ImagelinkQuery);
+  console.log(EmailaddressQuery);
+  console.log(ContactNumberQuery);
+  console.log(AternatviContactsQuery);
+  console.log(IDNoQuery);
+  console.log(TAXQuery);
+  console.log(NatinalityQuery);
+  console.log(TitleQuery);
+  console.log(HomeaddressQuery);
+  console.log(HourrateQuery);
+  console.log(JobTitleQuery);
+  console.log(DepartmentbodyQuery);
+  console.log(DaysallowqueryQuery);
+
   const PayrollSave = new Payrollsmodel(
     {
       Employee_Profile_Picture: ImagelinkQuery,
@@ -782,8 +789,22 @@ app.post("/Addnewemployee", function(req, res){
       Employee_Allowance:"0",
       Medical_Aid:"0",
     });
-  PayrollSave.save().then(() => res.redirect("/"));
+  PayrollSave.save()
+      .then(() => res.redirect("/"))
+      .catch(err => {
+          console.error(err);
+          res.status(500).send(`
+          <div style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+            <strong>Error:</strong> ${err}
+          </div>
+        `);
+      });
 });
+
+
+
+
+
 
 
 //Geeting data from DB to Front End to mian page
@@ -950,7 +971,7 @@ const UserModel = mongoose.model("User", userschema);
 
 const UserSave = new UserModel({
   email: "SYGE@gmail.com",
-  password: "Payrolltest@sageDEVS"
+  password: " "
 });
 
 // bcrypt.hash(UserSave.password, saltRounds, function(err, hash) {
