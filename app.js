@@ -21,7 +21,7 @@ app.use(session({
   secret: 'ThETerminatorIsHere',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }));
 
 app.use(passport.initialize());
