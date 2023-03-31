@@ -19,10 +19,8 @@ app.use(session({
   secret: 'ThETerminatorIsHere',
   resave: false,
   saveUninitialized: true,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 3600000 // 1 hour
-  }
+  cookie: { secure: false},
+  proxy: true // Add this option
 }));
 app.use(passport.initialize());
 app.use(passport.session());
