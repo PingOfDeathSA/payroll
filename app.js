@@ -19,9 +19,11 @@ app.use(session({
   secret: 'ThETerminatorIsHere',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false}
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 3600000 // 1 hour
+  }
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/PayrolllDB');
