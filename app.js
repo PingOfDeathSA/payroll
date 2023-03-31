@@ -3,28 +3,61 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const encrypt= require("mongoose-encryption");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+const session = require('express-session');
+const passport = require("passport");
+const passportLocalMongoose = require('passport-local-mongoose');
+// const encrypt= require("mongoose-encryption");
+// const bcrypt = require("bcrypt");
+// const saltRounds = 10;
 // const date = require(__dirname + "/date.js");
 mongoose.set('strictQuery', true);
 const app = express();
-
 app.set('view engine', 'ejs');
-
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(express.static("public"));
+app.use(session({
+  secret: 'ThETerminatorIsHere',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false}
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/PayrolllDB');
+
 
 
 const userschema= new mongoose.Schema({
   email: String,
   password: String,
-
+  companyname: String,
+  Company_image: String,
+  ContactDetails: String
 });
 
-// console.log(currentSN);
+
+userschema.plugin(passportLocalMongoose);
+
+
+const UserModel = mongoose.model("User", userschema);
+
+passport.use(UserModel.createStrategy());
+
+passport.serializeUser(UserModel.serializeUser());
+passport.deserializeUser(UserModel.deserializeUser());
+
+
+
+const UserSave = new UserModel({
+  email: "test@gmail.com",
+  password: "testing@443547",
+  Company_Name: 'Crestview Communications Agency',
+  Company_image: "https://www.freepnglogos.com/uploads/company-logo-png/company-logo-transparent-png-19.png",
+});
+
+
+
 
 
 const PayrollSchema = mongoose.Schema({
@@ -298,53 +331,9 @@ Payrollsmodel.find(
   }
 );
 
-//Geeting data from DB to Front End to Add new employee
-app.get('/Payroll.html', (req, res) => {
-  Payrollsmodel.find(
-    { },
-    function (err, EmployeeDetails) {
-    if (err) {
-      console.log(err) 
-    } else { 
-      // console.log(EmployeeDetails)
-    }
-    res.render("payroll", {listTitle: "Today", Learn: EmployeeDetails});
-  });
-});
 
 
-//Geeting data from DB to Front End to Add new employee
-app.get('/AddNewEmployee.html', (req, res) => {
-  Payrollsmodel.find(
-    { },
-    function (err, EmployeeDetails) {
-    if (err) {
-      console.log(err) 
-    } else {
-      //  console.log(EmployeeDetails)
-    }
-    res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails,
-    
-  
-  });
-  });
-});
 
-app.get('/LeavedaysAdmin.html', (req, res) => {
-  Payrollsmodel.find(
-    { },
-    function (err, EmployeeDetails) {
-    if (err) {
-      console.log(err) 
-    } else {
-      //  console.log(EmployeeDetails)
-    }
-    res.render("leavedays", {listTitle: "Today", Learn: EmployeeDetails,
-    
-  
-  });
-  });
-});
 
 
 
@@ -640,37 +629,6 @@ app.post('/commits', (req, res) => {
    });
 });
 
-// getting previous payroll commits from database'
-app.get('/PayrollCommits.html', (req, res) => {
-  PayrollModelRollouts.find(
-    { },
-    function (err, EmployeeDetails) {
-    if (err) {
-      console.log(err) 
-    } else {
-      //  console.log(EmployeeDetails)
-    }
-    res.render("payrollcommits", {listTitle: "Today", Learn: EmployeeDetails,
-    
-  
-  });
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.post('/EmployeeInfoUpdate', (req, res) => {
 
@@ -807,20 +765,7 @@ app.post("/Addnewemployee", function(req, res){
 
 
 
-//Geeting data from DB to Front End to mian page
-app.get('/dashboard.html', (req, res) => {
-  Payrollsmodel.find(
-    { },
-    function (err, EmployeeDetails) {
-    if (err) {
-      console.log(err) 
-    } else { 
-      // console.log(EmployeeDetails)
-    }
-    res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
-    });
-  });
-});
+
 // Starting Sever
 app.listen(5000, function() {  
   console.log("Server started on port 5000");
@@ -925,54 +870,18 @@ app.post('/searchPayrollRolloutsByDate', (req, res) => {
 
 
 
-
-
-// Generate a random student number between 100 and 999
-//let current_Employee_Number;
-// Find all the employees in the Payrollsmodel collection
-// Payrollsmodel.find(function (err, EmployeesM) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     // Loop through each employee and store their employee number in the current_Employee_Number variable
-//     EmployeesM.forEach(function (Employee) {
-//       current_Employee_Number = Employee.Employee_Number;
-//     });
-//     // Here you can use the current_Employee_Number variable
-//   }
-// });
-
-
-// Payrollsmodel.save().then(() => console.log('Employee added'));
-// const fist_Name_VALIDATOR = "Sammy";
-// const last_Name_VALIDATOR = "Phahlamohlaka";
-// const STN_validator = current_Employee_Number
-
-
-
-
-
-
-
-
-// Learnermodel.find({ Last_Name: last_Name_VALIDATOR },{ Fist_Name: fist_Name_VALIDATOR },{ Student_Number: STN_validator }, function (err, learners) {
-//   if (learners.some((learner) => learner.Last_Name === last_Name_VALIDATOR) || learners.some((learner) => learner.Fist_Name === fist_Name_VALIDATOR) && learners.some((learner) => learner.Student_Number === STN_validator)) {
-//     console.log("Learner already exists");
-//   } else {
-//     //  console.log("Learner already add");
-//       // learnerSave.save().then(() => console.log('Learner added'));
-//   }
-// });
-
-
-
 //user authen
-const UserModel = mongoose.model("User", userschema);
+// const UserModel = mongoose.model("User", userschema);
 
-const UserSave = new UserModel({
-  email: "SYGE@gmail.com",
-  password: " "
-});
+// const UserSave = new UserModel({
+//   email: "test@gmail.com",
+//   password: "testing@443547",
+//   Company_Name: 'Crestview Communications Agency',
+//   Company_image: "https://www.freepnglogos.com/uploads/company-logo-png/company-logo-transparent-png-19.png",
+ 
+
+// });
+
 
 // bcrypt.hash(UserSave.password, saltRounds, function(err, hash) {
 //   if (err) {
@@ -988,82 +897,317 @@ const UserSave = new UserModel({
 //     });
 //   }
 // });
-UserModel.find(
-  {email:"SYGE@gmail.com"},
-  function (err, userlogindetails) {
-  if (err) {
-    console.log(err)
-  } else { 
-     console.log(userlogindetails)
-  }
+
+app.get('/das', (req, res) => {
+  Payrollsmodel.find(
+    { },
+    function (err, EmployeeDetails) {
+    if (err) {
+      console.log(err) 
+    } else {
+      //  console.log(EmployeeDetails)
+    }
+    res.render("userpage", {listTitle: "Today", Learn: EmployeeDetails,
+    
+  
+  });
+  });
 });
+
+// UserModel.find(
+//   {email:"SYGE@gmail.com"},
+//   function (err, userlogindetails) {
+//   if (err) {
+//     console.log(err)
+//   } else { 
+//      console.log("uers check two is"+  userlogindetails)
+//   }
+
+// });
+
+app.get("/logout", function(req, res){
+  req.logOut(function(err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+
+
 app.get("/",function(req, res){
   res.render("login");
 });
-app.post("/login", function(req, res){
-  const username = req.body.username;
-  const password = req.body.password;
-
-  UserModel.findOne(
-    { email: username },
-    function (err, foundUser) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (foundUser) {
-          bcrypt.compare(password, foundUser.password, function(err, result) {
-            if (err) {
-              console.log(err);
-            } else if (result === true) {
-              Payrollsmodel.find({}, function (err, EmployeeDetails) {
-                if (err) {
-                  console.log(err);
-                } else { 
-                  res.render("list", {
-                    listTitle: "Today",
-                    Learn: EmployeeDetails
-                  });
-                }
-              });
-            } else {
-              res.render("errorlogin");
-            }
-          });
-        } else {
-          res.render("errorlogin");
-        }
-      }
-    }
-  );
-});
 
 
 
+app.post("/", function(req, res){
+const user = new UserModel({
+  username: req.body.username,
+  password: req.body.password,
+})
+req.logIn( user, function (err) {
+  if(err){
+    console.log(err)
+  } else {
+    passport.authenticate("local")(req, res, function () {
 
-
-app.get("/register",function(req, res){
-  res.render("register");
-});
-app.post("/register",function(req, res){
-
-  bcrypt.genSalt(saltRounds, function(err, salt) {
-    bcrypt.hash(req.body.password, salt, function(err, hash) {
-        // Store hash in your password DB.
-        const newUser = new UserModel  ({
-          email: req.body.username,
-          password: hash,
-        });
-      newUser.save(function (err) {
-        if (err){
+      Payrollsmodel.find({}, function (err, EmployeeDetails) {
+        if (err) {
           console.log(err);
-        }else{
-          res.render("secrets")
+        } else { 
+          res.render("list", {
+            listTitle: "Today",
+
+            Learn: EmployeeDetails,
+                         
+          });
         }
-      })
+      });
+     
       
-      // UserSave.save().then(() => console.log('User added'));
+    })
+  }
+  
+})
+  // const username = req.body.username;
+  // const password = req.body.password;
+  // UserModel.findOne(
+  //   { email: username },
+  //   function (err, foundUser) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       if (foundUser) {
+  //         bcrypt.compare(password, foundUser.password, function(err, result) {
+  //           if (err) {
+  //             console.log(err);
+  //           } else if (result === true) {
+  //             Payrollsmodel.find({}, function (err, EmployeeDetails) {
+  //               if (err) {
+  //                 console.log(err);
+  //               } else { 
+  //                 UserModel.find({ email: username }, function (err, users) {
+  //                   if (err) {
+  //                     console.log(err);
+  //                   } else {
+  //                     users.forEach(function(user) {
+  //                       console.log(user.email);
+  //                       console.log(user.Company_Name);
+  //                       console.log(user.Company_image);
+                     
+  //                     });
+  //                     res.render("list", {
+  //                       listTitle: "Today",
+
+  //                       Learn: EmployeeDetails,
+  //                       userEmail: users[0].email,
+  //                       userCompanyName: users[0].Company_Name,
+  //                       useruserCompanyImage: users[0].Company_image,                  
+  //                     });
+  //                   }
+  //                 });
+  //               }
+  //             });
+  //           } else {
+  //             res.render("errorlogin");
+  //           }
+  //         });
+  //       } else {
+  //         res.render("errorlogin");
+  //       }
+  //     }
+  //   }
+  // );  
+});
+//Geeting data from DB to Front End to mian leavedays page
+app.get("/LeavedaysAdmin.html",function(req, res){
+  if (req.isAuthenticated()){
+    Payrollsmodel.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("leavedays", {listTitle: "Today", Learn: EmployeeDetails,
     });
+    });
+
+  } else {
+    res.redirect("/")
+  }
+});
+
+//Geeting data from DB to Front End to mian page
+app.get('/dashboard.html', (req, res) => {
+  if (req.isAuthenticated()){
+    Payrollsmodel.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
+    });
+    });
+
+  } else {
+    res.redirect("/")
+  }
+
+  // UserModel.find({ email: username }, function (err, users) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     users.forEach(function(user) {
+  //       console.log(user.email);
+  //       console.log(user.Company_Name);
+  //       console.log(user.Company_image);
+     
+  //     });
+  //     res.render("list", {
+  //       listTitle: "Today",
+
+  //       Learn: EmployeeDetails,
+  //       userEmail: users[0].email,
+  //       userCompanyName: users[0].Company_Name,
+  //       useruserCompanyImage: users[0].Company_image,
+       
+       
+  //     });
+  //   }
+  // });
+
+});
+
+//Geeting data from DB to Front End to Add new employee
+app.get('/Payroll.html', (req, res) => {
+  if (req.isAuthenticated()){
+    Payrollsmodel.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("payroll", {listTitle: "Today", Learn: EmployeeDetails,
+    });
+    });
+
+  } else {
+    res.redirect("/")
+  }
+});
+
+//Geeting data from DB to Front End to Add new employee
+app.get('/AddNewEmployee.html', (req, res) => {
+  if (req.isAuthenticated()){
+    Payrollsmodel.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("Addnewemployee", {listTitle: "Today", Learn: EmployeeDetails,
+    });
+    });
+
+  } else {
+    res.redirect("/")
+  }
+});
+
+// getting previous payroll commits from database'
+app.get('/PayrollCommits.html', (req, res) => {
+
+  if (req.isAuthenticated()){
+    PayrollModelRollouts.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("payrollcommits", {listTitle: "Today", Learn: EmployeeDetails,
+      
+    
+    });
+    });
+
+  } else {
+    res.redirect("/")
+  }
 });
 
 
+
+
+
+// app.get("/dashboard.html",function(req, res){
+//   if (req.isAuthenticated()){
+//     res.render("list", { listTitle: "Today",});
+
+//   } else {
+//     res.redirect("/login")
+//   }
+// });
+
+
+
+
+// app.get("/dashboard.html",function(req, res){
+//   if (req.isAuthenticated()){
+//     res.render("list", { listTitle: "Today",});
+
+//   } else {
+//     res.redirect("/login")
+//   }
+// });
+
+
+
+
+app.get("/register.html",function(req, res){
+  res.render("registerpage");
 });
+app.post("/register.html",function(req, res){
+
+  UserModel.register({username: req.body.username, companyname: req.body.companyname, ContactDetails: req.body.ContactDetails }, req.body.password, function (err,user) {
+    if(err){
+      console.log(err);
+      res.redirect("/register.html");
+    } else {
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/welcome.html");
+      })
+    }
+  });
+});
+
+app.get("/welcome.html", function (req, res) {
+  if (req.isAuthenticated()){
+    Payrollsmodel.find(
+      { },
+      function (err, EmployeeDetails) {
+      if (err) {
+        console.log(err) 
+      } else {
+        //  console.log(EmployeeDetails)
+      }
+      res.render("welecome",
+    );
+    });
+
+  } else {
+    res.redirect("/")
+  }
+  
+})
