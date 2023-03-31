@@ -19,7 +19,7 @@ app.use(express.static("public"));
 app.set('trust proxy', 1);
 
 app.use(session({
-  secret: 'mysecretkey',
+  secret: 'THeTerminatorIsHere',
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({
@@ -27,7 +27,6 @@ app.use(session({
     collectionName: 'sessions',
     ttl: 60 * 60 // 1 hour
   })
-  
 }));
 
 
