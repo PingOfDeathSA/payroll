@@ -15,13 +15,15 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.set('trust proxy', 1);
+
 app.use(session({
   secret: 'ThETerminatorIsHere',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false},
-  proxy: true // Add this option
+  cookie: { secure: false }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 mongoose.connect('mongodb+srv://PingOfDeathSA:Ronald438@cluster0.kqlfkdc.mongodb.net/PayrolllDB');
