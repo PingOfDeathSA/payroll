@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const passport = require("passport");
 const passportLocalMongoose = require('passport-local-mongoose');
+const MongoStore = require('connect-mongo')(session);
 // const encrypt= require("mongoose-encryption");
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
@@ -18,11 +19,17 @@ app.use(express.static("public"));
 app.set('trust proxy', 1);
 
 app.use(session({
-  secret: 'ThETerminatorIsHere',
+  secret: 'mysecretkey',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false }
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    collectionName: 'sessions',
+    ttl: 60 * 60 // 1 hour
+  })
+  
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
