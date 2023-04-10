@@ -7,16 +7,22 @@ const session = require('express-session');
 const passport = require("passport");
 const passportLocalMongoose = require('passport-local-mongoose');
 const MongoStore = require('connect-mongo')(session);
+const LocalStrategy = require('passport-local').Strategy;
 // const encrypt= require("mongoose-encryption");
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
 // const date = require(__dirname + "/date.js");
 mongoose.set('strictQuery', true);
+
+
+
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.set('trust proxy', 1);
+
 
 app.use(session({
   secret: 'THeTerminatorIsHere',
@@ -51,7 +57,7 @@ userschema.plugin(passportLocalMongoose);
 const UserModel = mongoose.model("User", userschema);
 
 passport.use(UserModel.createStrategy());
-
+passport.use(new LocalStrategy({ username: 'email' }, UserModel.authenticate()));
 passport.serializeUser(UserModel.serializeUser());
 passport.deserializeUser(UserModel.deserializeUser());
 
@@ -964,11 +970,22 @@ req.logIn( user, function (err) {
         if (err) {
           console.log(err);
         } else { 
-          res.render("list", {
-            listTitle: "Today",
-
-            Learn: EmployeeDetails,
-                         
+           const user = req.user;
+  
+           UserModel.find({ email: user.email }, function (err, users) {
+            if (err) {
+              console.log(err);
+            } else {
+              // console.log("Number of users:", users.length);
+              // console.log("Logged-in user email:", user);
+      res.render("list", {
+        listTitle: "Today",
+        Learn: EmployeeDetails,
+        userEmail: user,
+        userEmailHTML: user.username,
+        ComapanyNmae: user.companyname,
+      });
+            }
           });
         }
       });
@@ -978,55 +995,7 @@ req.logIn( user, function (err) {
   }
   
 })
-  // const username = req.body.username;
-  // const password = req.body.password;
-  // UserModel.findOne(
-  //   { email: username },
-  //   function (err, foundUser) {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       if (foundUser) {
-  //         bcrypt.compare(password, foundUser.password, function(err, result) {
-  //           if (err) {
-  //             console.log(err);
-  //           } else if (result === true) {
-  //             Payrollsmodel.find({}, function (err, EmployeeDetails) {
-  //               if (err) {
-  //                 console.log(err);
-  //               } else { 
-  //                 UserModel.find({ email: username }, function (err, users) {
-  //                   if (err) {
-  //                     console.log(err);
-  //                   } else {
-  //                     users.forEach(function(user) {
-  //                       console.log(user.email);
-  //                       console.log(user.Company_Name);
-  //                       console.log(user.Company_image);
-                     
-  //                     });
-  //                     res.render("list", {
-  //                       listTitle: "Today",
 
-  //                       Learn: EmployeeDetails,
-  //                       userEmail: users[0].email,
-  //                       userCompanyName: users[0].Company_Name,
-  //                       useruserCompanyImage: users[0].Company_image,                  
-  //                     });
-  //                   }
-  //                 });
-  //               }
-  //             });
-  //           } else {
-  //             res.render("errorlogin");
-  //           }
-  //         });
-  //       } else {
-  //         res.render("errorlogin");
-  //       }
-  //     }
-  //   }
-  // );  
 });
 //Geeting data from DB to Front End to mian leavedays page
 app.get("/LeavedaysAdmin.html",function(req, res){
@@ -1051,46 +1020,40 @@ app.get("/LeavedaysAdmin.html",function(req, res){
 //Geeting data from DB to Front End to mian page
 app.get('/dashboard.html', (req, res) => {
   if (req.isAuthenticated()){
-    Payrollsmodel.find(
-      { },
-      function (err, EmployeeDetails) {
+    
+    Payrollsmodel.find({}, function (err, EmployeeDetails) {
       if (err) {
-        console.log(err) 
-      } else {
-        //  console.log(EmployeeDetails)
-      }
-      res.render("list", {listTitle: "Today", Learn: EmployeeDetails,
+        console.log(err);
+      } else { 
+         const user = req.user;
+
+         UserModel.find({ email: user.email }, function (err, users) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Number of users:", users.length);
+            console.log("Logged-in user email:", user);
+
+    res.render("list", {
+      listTitle: "Today",
+      Learn: EmployeeDetails,
+      userEmail: user,
+      userEmailHTML: user.username,
+      ComapanyNmae: user.companyname,
     });
+          }
+        });
+      }
     });
 
   } else {
     res.redirect("/")
   }
-
-  // UserModel.find({ email: username }, function (err, users) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     users.forEach(function(user) {
-  //       console.log(user.email);
-  //       console.log(user.Company_Name);
-  //       console.log(user.Company_image);
-     
-  //     });
-  //     res.render("list", {
-  //       listTitle: "Today",
-
-  //       Learn: EmployeeDetails,
-  //       userEmail: users[0].email,
-  //       userCompanyName: users[0].Company_Name,
-  //       useruserCompanyImage: users[0].Company_image,
-       
-       
-  //     });
-  //   }
-  // });
-
 });
+
+
+
+
 
 //Geeting data from DB to Front End to Add new employee
 app.get('/Payroll.html', (req, res) => {

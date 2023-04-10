@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": ">=12.0.0"
   },
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
@@ -21,5 +23,26 @@
     "passport": "^0.6.0",
     "passport-local-mongoose": "^8.0.0",
     "request": "^2.88.2"
-  }
+  },
+  "vercel": {
+    "version": 2,
+    "builds": [
+      {
+        "src": "app.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/*",
+        "dest": "app.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "app.js"
+      }
+    ]
+  },
+  "author": "",
+  "license": "ISC"
 }
