@@ -1,3 +1,156 @@
+
+/* .card-title{
+  position: absolute;
+ top: 10px;
+
+} */
+
+.numbers{
+  font-weight: bold;
+  font-size: 30px;
+ 
+}
+.dangers{
+  border: solid;
+  border-width: 1px;
+  /* border-color: #b1aeae;
+  border-left: 5px solid #fcfeff; */
+}
+
+
+.navpush{
+  position:absolute;
+  left:80%
+}
+.announ{
+  border: solid;
+  border-width: 1px;
+  border-color: #b1aeae;
+  height: 150px;
+  border-left: 5px solid #e66750;
+  font-weight: normal;
+  height: 70px;
+  border-radius: 10px;
+  text-align: center;
+vertical-align:middle;
+padding-top: 20px;
+  margin-bottom: 2%;
+  /* box-shadow: 5px 10px 12px 2px #888888; */
+}
+
+
+.FullProfile{
+  width: 40%;
+  height: 20%;
+border-radius: 10px;
+
+}
+
+.Fullprofile{
+  width: 20%;
+  height: 20%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+border-radius: 10px;
+display: inline;
+}
+.TeacherPro {
+  display: inline-block;
+  width: 100px; /* Set to desired size */
+  height: 100px; /* Set to desired size */
+  border-radius: 50%; /* Make it a circle */
+  object-fit: cover; /* Maintain aspect ratio */
+  object-position: center center; /* Center the image */
+  border-color:  black ;
+  
+border: solid;
+}
+.TeacherPro2 {
+  margin: 5px;
+  display: inline-block;
+  width: 70px; /* Set to desired size */
+  height: 70px; /* Set to desired size */
+  border-radius: 50%; /* Make it a circle */
+  object-fit: cover; /* Maintain aspect ratio */
+  object-position: center center; /* Center the image */
+  border-color:  black ;
+  
+border: solid;
+}
+
+  .mycolors{
+ color:#A5C9CA ;
+ background-color: #EEEEEE;
+ border-color:#476072 ; 
+ background-color: #a2b2c9;
+   
+  
+   
+}
+
+
+ .sidecolor{
+  background-color: #476072;
+ }
+ .topNavcolor{
+  background-color: #000000;
+ }
+.Cards1 {
+  /* box-shadow: 5px 10px 12px 2px #888888; */
+  border: solid;
+  border-width: 1px;
+  border-color: #b1aeae;
+  height: 150px;
+  border-left: 5px solid #6ee650;
+ 
+  border-radius: 20px;
+  /* background-color: #EEEEEE; */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none"><path d="M0 150 C150 200 350 100 500 150 C650 200 850 100 1000 150 L1000 200 L0 200 Z" fill="%23A5C9CA" /></svg>');
+   
+}
+
+.Cards2 {
+  /* box-shadow: 5px 10px 12px 2px #888888; */
+  border: solid;
+  border-width: 1px;
+  border-color: #b1aeae;
+  height: 150px;
+  border-left: 5px solid #e66750;
+ 
+  border-radius: 20px;
+  /* background-color: #EEEEEE; */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none"><path d="M0 150 C250 200 350 50 500 120 C650 200 850 100 1000 150 L1000 200 L0 200 Z" fill="%23a2b2c9" /></svg>');
+}
+
+.Cards3 {
+  /* box-shadow: 5px 10px 12px 2px #888888; */
+  border: solid;
+  border-width: 1px;
+  border-color: #b1aeae;
+  height: 150px;
+  border-left: 5px solid #d7e650;
+ 
+  border-radius: 20px;
+  /* background-color: #EEEEEE; */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none"><path d="M0 150 C250 200 350 50 500 120 C650 200 850 100 1000 150 L1000 200 L0 200 Z" fill="%23476072" /></svg>');
+}
+.Cards4 {
+  /* box-shadow: 5px 10px 12px 2px #888888; */
+  border: solid;
+  border-width: 1px;
+  border-color: #b1aeae;
+  height: 150px;
+  border-left: 5px solid #5078e6;
+ 
+  border-radius: 20px;
+  /* background-color: #EEEEEE; */
+
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200" preserveAspectRatio="none"><path d="M0 150 C150 200 350 100 500 150 C650 200 850 100 1000 150 L1000 200 L0 200 Z" fill="%23A5C9CA" /></svg>');
+   
+}
+
+
+
 /* desktop view */
 @media screen and (min-width: 551px) {
   /* CSS code for desktop view */
@@ -373,15 +526,18 @@ body {
 }
 
 .ProfileTecher{
+  padding-left: 10px;
 margin-top: 1%;
 margin-left: 2%;
+margin-right: 2%;
 
 
 }
 .image_size {
+  display: inline;
   margin: 2%;
  
-  width: 100%;
+  width: 150px;
    border-radius: 5%;
   border: solid black 2px;
   overflow: hidden;

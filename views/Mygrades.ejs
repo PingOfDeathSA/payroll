@@ -1,0 +1,322 @@
+<%- include("header") -%>
+<head>
+  <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
+  <link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+  <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
+  <meta name="theme-color" content="#712cf9">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="public/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+
+</head>
+
+<section aria-colspan="main">
+
+
+  <!doctype html>
+  <html lang="en">
+
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+      <meta name="generator" content="Hugo 0.104.2">
+      <title>SYGE</title>
+  
+      <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
+      <link rel="stylesheet" href="style.css">
+  
+      <link rel="stylesheet" href="public/css/style.css">
+      
+  
+      
+  
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  
+      <!-- Favicons -->
+ 
+  
+      
+      <!-- Custom styles for this template -->
+      <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+      
+      <nav class="topNavcolor navbar navbar-expand-lg ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#"  style="color: aliceblue; font-weight:400">SmartConnect</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled navpush" href="#"  style="color: aliceblue; font-weight:400">Welcome: 
+         <% Teacher.forEach(function(item) { %>           
+          <span><%= item.title %></span>   <span><%= item.first_name %></span>  <span><%= item.last_name %></span> </h5>
+                  <% }); %>
+              </a>
+            </li>
+          </ul>
+       
+        </div>
+      </nav>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-1 sidebar-sticky sideM">
+          <ul class="nav flex-column">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+
+
+              <% Teacher.forEach(function(item) { %>
+              <span><img class="TeacherPro2" src="<%= item.teacher_profile_picture %>" style="margin-bottom:10px;margin-left:7%;" alt=""></span> 
+              <% }); %>
+              
+              <a class="link-secondary" href="#" aria-label="Add a new report">
+                <span data-feather="plus-circle" class="align-text-bottom"></span>
+              </a>
+            </h6>
+            <li class="nav-item ">
+              <a class="nav-link" aria-current="page" href="/dashboard.html">
+                <span data-feather="home" class="align-text-bottom"></span>
+                Dashboard
+              </a>
+            </li>
+           
+            <li class="nav-item">
+
+              <a class="nav-link" href="/Mylearner.html">
+                <span data-feather="file" class="align-text-bottom"></span>
+                My Learners
+              
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/Mygrades.html">
+                <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              My Subjects
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/LeavedaysAdmin.html">
+                <span data-feather="users" class="align-text-bottom"></span>
+               Library
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/PayrollCommits.html">
+                <span data-feather="users" class="align-text-bottom"></span>
+                Payroll Reports
+              </a>
+            </li>
+          </ul>
+  
+        </div>
+      </nav>
+  
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" >
+        <div class="row">
+          <div class="col-sm-12">  <h1 style="margin-bottom: 3%;margin-top: 1%;">My Subjects</h1></div>
+         
+        </div>
+   
+     
+     
+              
+            
+        <div class="row">
+      
+          <div class="col-6 col-md-4">
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            
+            
+            <div id="myPlot" style="width:100%;max-width:400px"></div>
+            
+            <script>
+              const xArray = <%- JSON.stringify(xValues); %>;
+              const yArray = <%- JSON.stringify(yValues); %>;
+            
+              const data = [{
+                x: xArray,
+                y: yArray,
+                type: "bar",
+                marker: {
+                  color: ['rgba(255,0,0,0.5)', 'rgba(0,255,0,0.5)', 'rgba(0,0,255,0.5)', 'rgba(255,255,0,0.5)', 'rgba(0,255,255,0.5)']
+                }
+              }];
+            
+              const layout = {
+                title: "Average Grade Performance per Subject Bar",
+                xaxis: {title: "Subjects"},
+                yaxis: {title: "Average Performance"}
+              };
+            
+              Plotly.newPlot("myPlot", data, layout);
+            </script>
+            
+
+
+
+            
+          </div>
+          <div class="col-6 col-md-4" >
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+          
+            <canvas id="myChart" style="width:100%;max-width:700px; margin-top: 30%;"></canvas>
+            
+            <script>
+              const xValues = <%- JSON.stringify(xValues); %>;
+              const yValues = <%- JSON.stringify(yValues); %>;
+                        
+              new Chart("myChart", {
+                type: "line",
+                data: {
+                  labels: xValues,
+                  datasets: [{
+                    fill: true,
+                    lineTension: 0,
+                    backgroundColor: "rgba(135,206,235,1.0)",
+                    borderColor: "rgba(0,0,395,0.1)",
+                    data: yValues
+                  }]
+                },
+                options: {
+                  legend: {display: false},
+                  scales: {
+                    yAxes: [{ticks: {min: 0, max: 100}}],
+                  },
+                  title: {
+                    display: true,
+                    text: "Average Grade Performance per Subject Line"
+                  }
+                }
+              });
+            </script></div>
+          <div class="col-6 col-md-4">
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<body>
+
+<canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+
+<script>
+var xValuess = <%- JSON.stringify(xValues); %>;
+var yValuess = <%- JSON.stringify(yValues); %>;
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+new Chart("myChart2", {
+  type: "pie",
+  data: {
+    labels: xValuess,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValuess
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Average Grade Performance per Subject Pie"
+    }
+  }
+});
+</script>
+          </div>
+        </div>
+      
+    
+
+        <div class="row" style="margin-top: 4%;">
+          <div class="col-6 col-md-6"> 
+            <span class="card-title" style="margin-left:7%;margin-top:7%;"><h4 style="display: inline;"> Statistics</h4></span>
+  
+            <% Object.keys(TotalNofLPerGradeSubject).forEach(function(gradeSubject) { %>
+                
+                    <h4 class="btn btn-dark dangers" style="margin-top:1%; Display: block">Suject per Grade: <%= gradeSubject %> Total Number Of Learners: <%= TotalNofLPerGradeSubject[gradeSubject] %></h4>
+                
+                <% }); %>
+      </div>
+          <div class="col-6 col-md-3" style="display: inline;">
+            <% Teacher.forEach(function(item) { %>
+            <span class="card-title" style="margin-left:7%;margin-top:7%;"><h4 style="display: inline;"> My Grades</h4></span>
+           
+            <p class="numbers">  <span class="badge badge-dark dangers" style="margin-left:2%;margin-top:7%;"><%= item.GradeID %></span></p>
+
+          </div>
+          <div class="col-6 col-md-3" style="display: inline;">
+       
+          
+            <span class="card-title" style="margin-left:7%;margin-top:7%;"><h4 style="display: inline;"> My Subjects</h4></span>
+           
+            <p class="numbers">  <span class="badge badge-dark dangers" style="margin-left:2%;margin-top:7%;"><%= item.subject %></span></p>
+          </div>
+        </div>
+
+
+
+
+    <% }); %>
+  
+
+
+        
+
+      
+   
+        
+       
+       
+             
+
+     
+
+
+        
+        <!-- Modal dialog -->
+        <script src="/js/script.js"></script>
+         </body>
+      
+      
+
+
+<!-- Main content -->
+
+
+
+
+  
+
+ <!-- this below is for connectinf the pages -->
+ 
+
+
+
+</html>
