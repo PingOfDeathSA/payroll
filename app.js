@@ -959,6 +959,40 @@ app.get("/",function(req, res){
 
 
 
+<<<<<<< HEAD
+=======
+      Payrollsmodel.find({}, function (err, EmployeeDetails) {
+        if (err) {
+          console.log(err);
+        } else { 
+           const user = req.user;
+  
+           UserModel.find({ email: user.email }, function (err, users) {
+            if (err) {
+              console.log(err);
+            } else {
+              // console.log("Number of users:", users.length);
+              // console.log("Logged-in user email:", user);
+      res.render("list", {
+        listTitle: "Today",
+        Learn: EmployeeDetails,
+        userEmail: user,
+        userEmailHTML: user.username,
+        ComapanyNmae: user.companyname,
+      });
+            }
+          });
+        }
+      });
+     
+      
+    })
+  }
+  
+})
+
+});
+>>>>>>> 7140f906f399370bdd63cdeb9ed485209a3ec9e1
 //Geeting data from DB to Front End to mian leavedays page
 app.get("/LeavedaysAdmin.html",function(req, res){
   if (req.isAuthenticated()){
@@ -987,7 +1021,11 @@ app.get('/dashboard.html', (req, res) => {
       if (err) {
         console.log(err);
       } else { 
+<<<<<<< HEAD
          
+=======
+         const user = req.user;
+>>>>>>> 7140f906f399370bdd63cdeb9ed485209a3ec9e1
 
          UserModel.find({ email: user.email }, function (err, users) {
           if (err) {
