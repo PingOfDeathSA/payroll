@@ -31,11 +31,7 @@
 
     "request": "^2.88.2",
     "tedious": "^6.3.0"
-  }
-
-    "request": "^2.88.2"
   },
   "author": "",
   "license": "ISC"
-
 }
