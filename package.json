@@ -28,14 +28,14 @@
     "nodemailer": "^6.9.1",
     "passport": "^0.6.0",
     "passport-local-mongoose": "^8.0.0",
-<<<<<<< HEAD
+
     "request": "^2.88.2",
     "tedious": "^6.3.0"
   }
-=======
+
     "request": "^2.88.2"
   },
   "author": "",
   "license": "ISC"
->>>>>>> 7140f906f399370bdd63cdeb9ed485209a3ec9e1
+
 }
